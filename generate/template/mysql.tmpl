@@ -1,0 +1,43 @@
+package dao
+
+import (
+	"context"
+	"gorm.io/gorm"
+	"{{.ProjectName}}/global"
+)
+
+const (
+	{{.ConstTableName}}_TABLE = "{{.TableName}}"
+)
+
+type {{.UpperTableName}} struct {
+{{range .Columns}}  {{.FieldName}} {{if eq .FieldName "DeleteTime"}}gorm.DeletedAt{{else}}{{.Type}}{{end}} `json:"{{.Name}}" gorm:"column:{{.Name}}{{if eq .PrimaryKey "PRI"}};primary_key{{end}}"` {{if .Comment}}//{{.Comment}}{{end}}
+{{end}}
+}
+
+func ({{.UpperTableName}}) TableName() string {
+	return {{.ConstTableName}}_TABLE
+}
+
+type {{.UpperTableName}}Dao struct {
+	BaseMysql
+}
+
+func New{{.UpperTableName}}Dao(appCtx context.Context) *{{.UpperTableName}}Dao {
+	return &{{.UpperTableName}}Dao{
+		BaseMysql{
+        	db:     global.GormDB.Model(&{{.UpperTableName}}{}),
+        	appCtx: appCtx,
+        },
+	}
+}
+
+func New{{.UpperTableName}}DaoWithDB(db *gorm.DB, appCtx context.Context) *{{.UpperTableName}}Dao {
+	return &{{.UpperTableName}}Dao{
+		BaseMysql{
+        	db:     db.Model(&{{.UpperTableName}}{}),
+        	appCtx: appCtx,
+        },
+	}
+}
+

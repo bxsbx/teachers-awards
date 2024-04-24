@@ -1,0 +1,4383 @@
+definitions:
+  dao.ActivityAndUserInfo:
+    properties:
+      activity_id:
+        description: 活动id
+        type: integer
+      activity_name:
+        description: 活动名称
+        type: string
+      birthday:
+        description: 出生日期
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      declare_type:
+        description: 1:幼教、2:小学、3:初中、4:高中、5:职校、6:教研
+        type: integer
+      final_score:
+        description: 最终得分（各项通过的审核）
+        type: integer
+      identity_card:
+        description: 身份证号
+        type: string
+      phone:
+        description: 手机号
+        type: string
+      prize:
+        description: 奖金
+        type: integer
+      rank:
+        description: 排名
+        type: integer
+      rank_prize:
+        description: 0：无，1：一等奖，2：二等奖，3：三等奖
+        type: integer
+      school_id:
+        description: 学校id
+        type: string
+      school_name:
+        description: 学校名称
+        type: string
+      subject_code:
+        description: 科目code
+        type: string
+      user_activity_id:
+        description: 主键id
+        type: integer
+      user_id:
+        description: 用户id
+        type: string
+      user_name:
+        description: 用户姓名
+        type: string
+      user_sex:
+        description: 1：男，2：女
+        type: integer
+      year:
+        description: 年份
+        type: integer
+    type: object
+  dao.ActivityOneIndicator:
+    properties:
+      activity_id:
+        description: 活动id
+        type: integer
+      content:
+        description: 评分标准说明
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      one_indicator_id:
+        description: 一级指标id
+        type: integer
+      one_indicator_name:
+        description: 一级指标名称
+        type: string
+    type: object
+  dao.ActivityTwoIndicator:
+    properties:
+      activity_id:
+        description: 活动id
+        type: integer
+      create_time:
+        description: 创建时间
+        type: string
+      one_indicator_id:
+        description: 所属一级指标
+        type: integer
+      score:
+        description: 分值
+        type: integer
+      two_indicator_id:
+        description: 二级指标id
+        type: integer
+      two_indicator_name:
+        description: 二级指标名称
+        type: string
+    type: object
+  dao.EdbReviewItem:
+    properties:
+      create_time:
+        description: 创建时间
+        type: string
+      declare_type:
+        description: 1:幼教、2:小学、3:初中、4:高中、5:职校、6:教研
+        type: integer
+      final_score:
+        description: 最终得分（各项通过的审核）
+        type: integer
+      identity_card:
+        description: 身份证号
+        type: string
+      school_id:
+        description: 学校id
+        type: string
+      school_name:
+        description: 学校名称
+        type: string
+      status:
+        description: 审核状态:1:待审核，2：已审核
+        type: integer
+      subject_code:
+        description: 科目code
+        type: string
+      user_activity_id:
+        description: 用户活动id
+        type: integer
+      user_id:
+        description: 用户id
+        type: string
+      user_name:
+        description: 用户姓名
+        type: string
+      user_sex:
+        description: 1：男，2：女
+        type: integer
+    type: object
+  dao.JudgesVerify:
+    properties:
+      create_time:
+        description: 创建时间
+        type: string
+      is_pass:
+        description: 0：未通过，1：通过
+        type: integer
+      judges_id:
+        description: 评委id
+        type: string
+      judges_name:
+        description: 评委姓名
+        type: string
+      judges_type:
+        description: 评委类型，1：学校，2：专家，3：教育局
+        type: integer
+      opinion:
+        description: 审核意见
+        type: string
+      score:
+        description: 得分
+        type: integer
+      user_activity_id:
+        description: 0：未通过，1：通过
+        type: integer
+      user_activity_indicator_id:
+        description: "用户活动申报二级指标id \t//活动id"
+        type: integer
+      user_indicator_pass_id:
+        description: 主键id
+        type: integer
+    type: object
+  dao.Notice:
+    properties:
+      content:
+        description: 通知内容
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      is_read:
+        description: 0：未读，1：已读
+        type: integer
+      notice_id:
+        description: 主键
+        type: integer
+      notice_type:
+        description: 通知类型，1：系统通知
+        type: integer
+      user_id:
+        description: 接收者id
+        type: string
+    type: object
+  dao.OperationRecord:
+    properties:
+      create_time:
+        description: 创建时间
+        type: string
+      description:
+        description: 操作说明
+        type: string
+      operation_id:
+        description: 操作id
+        type: integer
+      operation_role:
+        description: 角色，1：学校，2：专家，3：教育局，4：教师
+        type: integer
+      operation_type:
+        description: 操作类型，1：添加，2：修改，3：删除
+        type: integer
+      relational_id:
+        description: 关联的id
+        type: integer
+      relational_type:
+        description: 关联表，1：user_activity_indicator
+        type: integer
+      user_id:
+        description: 用户id
+        type: string
+      user_name:
+        description: 用户姓名
+        type: string
+    type: object
+  dao.ResultGroupByDeclareType:
+    properties:
+      award_num:
+        description: 获奖人数
+        type: integer
+      declare_num:
+        description: 申报数量
+        type: integer
+      declare_type:
+        description: 1:幼教、2:小学、3:初中、4:高中、5:职校、6:教研
+        type: integer
+      first_prize_num:
+        description: 一等奖
+        type: integer
+      school_num:
+        description: 申报学校数量
+        type: integer
+      second_prize_num:
+        description: 二等奖
+        type: integer
+      status:
+        description: 排名总数，判断是否提交状态，0：未提交，1：已提交
+        type: integer
+      third_prize_num:
+        description: 三等奖
+        type: integer
+    type: object
+  dao.SchoolAwardNum:
+    properties:
+      award_num:
+        description: 获奖人数
+        type: integer
+      school_id:
+        description: 学校id，-1：其他学校
+        type: string
+      school_name:
+        description: 学校名称
+        type: string
+    type: object
+  dao.TeacherTypeAwardNum:
+    properties:
+      award_num:
+        description: 获奖人数
+        type: integer
+      declare_type:
+        description: 1:幼教、2:小学、3:初中、4:高中、5:职校、6:教研
+        type: integer
+    type: object
+  dao.TwoIndicator:
+    properties:
+      create_time:
+        description: 创建时间
+        type: string
+      one_indicator_id:
+        description: 所属一级指标
+        type: integer
+      score:
+        description: 分值
+        type: integer
+      two_indicator_id:
+        description: 主键id
+        type: integer
+      two_indicator_name:
+        description: 二级指标名称
+        type: string
+    type: object
+  dao.UserActivity:
+    properties:
+      activity_id:
+        description: 活动id
+        type: integer
+      birthday:
+        description: 出生日期
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      declare_type:
+        description: 1:幼教、2:小学、3:初中、4:高中、5:职校、6:教研
+        type: integer
+      final_score:
+        description: 最终得分（各项通过的审核）
+        type: integer
+      identity_card:
+        description: 身份证号
+        type: string
+      phone:
+        description: 手机号
+        type: string
+      prize:
+        description: 奖金
+        type: integer
+      rank:
+        description: 排名
+        type: integer
+      rank_prize:
+        description: 0：无，1：一等奖，2：二等奖，3：三等奖
+        type: integer
+      school_id:
+        description: 学校id
+        type: string
+      school_name:
+        description: 学校名称
+        type: string
+      subject_code:
+        description: 科目code
+        type: string
+      user_activity_id:
+        description: 主键id
+        type: integer
+      user_id:
+        description: 用户id
+        type: string
+      user_name:
+        description: 用户姓名
+        type: string
+      user_sex:
+        description: 1：男，2：女
+        type: integer
+    type: object
+  dao.UserHistoryDeclareResult:
+    properties:
+      activity_id:
+        description: 活动id
+        type: integer
+      activity_name:
+        description: 活动名称
+        type: string
+      final_score:
+        description: 最终得分（各项通过的审核）
+        type: integer
+      prize:
+        description: 奖金
+        type: integer
+      rank:
+        description: 排名
+        type: integer
+      rank_prize:
+        description: 0：无，1：一等奖，2：二等奖，3：三等奖
+        type: integer
+    type: object
+  dao.UserInfo:
+    properties:
+      avatar:
+        description: 头像
+        type: string
+      birthday:
+        description: 出生日期
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      declare_type:
+        description: 1:幼教、2:小学、3:初中、4:高中、5:职校、6:教研
+        type: integer
+      identity_card:
+        description: 身份证号
+        type: string
+      phone:
+        description: 手机号
+        type: string
+      roles:
+        description: 角色，1：学校，2：专家，3：教育局，4：教师，5：超级管理员
+        items:
+          type: integer
+        type: array
+      school_id:
+        description: 学校id
+        type: string
+      school_name:
+        description: 学校名称
+        type: string
+      subject_code:
+        description: 科目code
+        type: string
+      user_id:
+        description: 用户id
+        type: string
+      user_name:
+        description: 用户名称
+        type: string
+      user_sex:
+        description: 1：男，2：女
+        type: integer
+      year:
+        description: 年份
+        type: integer
+    type: object
+  dao.YearDeclareAwardNum:
+    properties:
+      award_num:
+        description: 获奖人数
+        type: integer
+      declare_num:
+        description: 申报数量
+        type: integer
+      year:
+        type: integer
+    type: object
+  req.BatchPassReq:
+    properties:
+      user_activity_indicator_ids:
+        description: 用户活动申报单项目id
+        items:
+          type: integer
+        type: array
+    required:
+    - user_activity_indicator_ids
+    type: object
+  req.CreateOrUpdateActivityReq:
+    properties:
+      activity_id:
+        description: 活动id
+        type: integer
+      activity_name:
+        description: 活动名称
+        type: string
+      description:
+        description: 申报须知
+        type: string
+      end_time:
+        description: 结束时间
+        type: string
+      start_time:
+        description: 开始时间
+        type: string
+      two_indicator_ids:
+        description: 二级指标ids，","隔开
+        type: string
+      url:
+        description: 活动文件url
+        type: string
+      year:
+        description: 年份
+        type: integer
+    required:
+    - activity_name
+    - description
+    - end_time
+    - start_time
+    - two_indicator_ids
+    - url
+    - year
+    type: object
+  req.CreateUserActivityDeclareReq:
+    properties:
+      activity_id:
+        description: 活动id
+        type: integer
+      birthday:
+        description: 出生日期
+        type: string
+      declare_type:
+        description: 1:幼教、2:小学、3:初中、4:高中、5:职校、6:教研
+        type: integer
+      identity_card:
+        description: 身份证号
+        type: string
+      list:
+        items:
+          $ref: '#/definitions/req.UserActivityIndicator'
+        type: array
+      phone:
+        description: 手机号
+        type: string
+      school_id:
+        description: 学校id
+        type: string
+      school_name:
+        description: 学校名称
+        type: string
+      subject_code:
+        description: 科目code
+        type: string
+      user_id:
+        description: 用户id
+        type: string
+      user_name:
+        description: 用户姓名
+        type: string
+      user_sex:
+        description: 1：男，2：女
+        enum:
+        - 1
+        - 2
+        type: integer
+    required:
+    - activity_id
+    - birthday
+    - declare_type
+    - identity_card
+    - phone
+    - school_id
+    - school_name
+    - subject_code
+    - user_id
+    - user_name
+    - user_sex
+    type: object
+  req.EdbDeclareToUserReq:
+    properties:
+      award_date:
+        description: 获奖日期
+        type: string
+      certificate_end_date:
+        description: 证书有效期——结束时间
+        type: string
+      certificate_start_date:
+        description: 证书有效期——开始时间
+        type: string
+      certificate_type:
+        description: 1.证书；需要填写证书有效期，2.证明；不需要有效期
+        type: integer
+      certificate_url:
+        description: 证书url
+        type: string
+      two_indicator_id:
+        description: 二级指标id
+        type: integer
+      user_activity_id:
+        description: 用户活动id
+        type: integer
+    required:
+    - two_indicator_id
+    - user_activity_id
+    type: object
+  req.SetExpertAuthReq:
+    properties:
+      two_ids:
+        description: 二级指标ids
+        items:
+          type: integer
+        type: array
+      user_id:
+        description: 用户id
+        type: string
+    required:
+    - two_ids
+    - user_id
+    type: object
+  req.SetRoleToUserReq:
+    properties:
+      roles:
+        description: 角色列表，1：学校，2：专家，3：教育局，4：老师，5：管理员
+        items:
+          type: integer
+        type: array
+      user_ids:
+        description: 用户id列表
+        items:
+          type: string
+        type: array
+    required:
+    - roles
+    - user_ids
+    type: object
+  req.UpdateTwoIndicatorIdReq:
+    properties:
+      award_date:
+        description: 获奖日期
+        type: string
+      certificate_end_date:
+        description: 证书有效期——结束时间
+        type: string
+      certificate_start_date:
+        description: 证书有效期——开始时间
+        type: string
+      certificate_type:
+        description: 1.证书；需要填写证书有效期，2.证明；不需要有效期
+        type: integer
+      certificate_url:
+        description: 证书url
+        type: string
+      two_indicator_id:
+        description: 二级指标id
+        type: integer
+      user_activity_indicator_id:
+        description: 用户活动申报单项目id
+        type: integer
+    required:
+    - two_indicator_id
+    - user_activity_indicator_id
+    type: object
+  req.UpdateUserActivityIndicatorReq:
+    properties:
+      award_date:
+        description: 获奖日期
+        type: string
+      certificate_end_date:
+        description: 证书有效期——结束时间
+        type: string
+      certificate_start_date:
+        description: 证书有效期——开始时间
+        type: string
+      certificate_type:
+        description: 1.证书；需要填写证书有效期，2.证明；不需要有效期
+        type: integer
+      certificate_url:
+        description: 证书url
+        type: string
+      two_indicator_id:
+        description: 二级指标id
+        type: integer
+      user_activity_indicator_id:
+        description: 用户活动申报下单个项目id
+        type: integer
+    required:
+    - award_date
+    - certificate_type
+    - certificate_url
+    - two_indicator_id
+    - user_activity_indicator_id
+    type: object
+  req.UserActivityIndicator:
+    properties:
+      award_date:
+        description: 获奖日期
+        type: string
+      certificate_end_date:
+        description: 证书有效期——结束时间
+        type: string
+      certificate_start_date:
+        description: 证书有效期——开始时间
+        type: string
+      certificate_type:
+        description: 1.证书；需要填写证书有效期，2.证明；不需要有效期
+        type: integer
+      certificate_url:
+        description: 证书url
+        type: string
+      two_indicator_id:
+        description: 二级指标id
+        type: integer
+    required:
+    - award_date
+    - certificate_type
+    - certificate_url
+    - two_indicator_id
+    type: object
+  resp.Activity:
+    properties:
+      activity_id:
+        description: 主键id
+        type: integer
+      activity_name:
+        description: 活动名称
+        type: string
+      attend_num:
+        description: 参加人数
+        type: integer
+      create_time:
+        description: 创建时间
+        type: string
+      description:
+        description: 申报须知
+        type: string
+      end_time:
+        description: 结束时间
+        type: string
+      review_num:
+        description: 当前已审核人数
+        type: integer
+      start_time:
+        description: 开始时间
+        type: string
+      status:
+        description: 1:待开始，2：进行中，3：已结束
+        type: integer
+      url:
+        description: 活动文件url
+        type: string
+      year:
+        description: 年份
+        type: integer
+    type: object
+  resp.ActivityIndicatorInfo:
+    properties:
+      content:
+        description: 评分标准说明
+        type: string
+      one_indicator_id:
+        description: 一级指标id
+        type: integer
+      one_indicator_name:
+        description: 一级指标名称
+        type: string
+      score:
+        description: 分值
+        type: integer
+      two_indicator_id:
+        description: 二级指标id
+        type: integer
+      two_indicator_name:
+        description: 二级指标名称
+        type: string
+    type: object
+  resp.ActivityListToUser:
+    properties:
+      activity_id:
+        description: 主键id
+        type: integer
+      activity_name:
+        description: 活动名称
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      description:
+        description: 申报须知
+        type: string
+      end_time:
+        description: 结束时间
+        type: string
+      is_declare:
+        description: 是否已申请
+        type: boolean
+      review_num:
+        description: 当前已审核人数
+        type: integer
+      start_time:
+        description: 开始时间
+        type: string
+      status:
+        description: 1:待开始，2：进行中，3：已结束
+        type: integer
+      url:
+        description: 活动文件url
+        type: string
+      year:
+        description: 年份
+        type: integer
+    type: object
+  resp.ActivityOneIndicator:
+    properties:
+      activity_id:
+        description: 活动id
+        type: integer
+      activity_two_indicators:
+        description: 二级指标列表
+        items:
+          $ref: '#/definitions/dao.ActivityTwoIndicator'
+        type: array
+      content:
+        description: 评分标准说明
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      one_indicator_id:
+        description: 一级指标id
+        type: integer
+      one_indicator_name:
+        description: 一级指标名称
+        type: string
+    type: object
+  resp.Announcement:
+    properties:
+      annex:
+        description: 附件链接
+        type: string
+      announcement_id:
+        description: 主键id
+        type: integer
+      content:
+        description: 内容
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      is_read:
+        type: boolean
+      title:
+        description: 标题
+        type: string
+      user_id:
+        description: 用户id
+        type: string
+      user_name:
+        description: 用户名称
+        type: string
+    type: object
+  resp.CreateOrUpdateTwoIndicatorResp:
+    properties:
+      create_time:
+        description: 创建时间
+        type: string
+      one_indicator_id:
+        description: 所属一级指标
+        type: integer
+      score:
+        description: 分值
+        type: integer
+      two_indicator_id:
+        description: 主键id
+        type: integer
+      two_indicator_name:
+        description: 二级指标名称
+        type: string
+    type: object
+  resp.DeclareStatus:
+    properties:
+      declare_time:
+        description: 申报时间
+        type: string
+      score:
+        description: 分值
+        type: integer
+      status:
+        description: 审核状态:1.已提交 ,2.已通过,3.学校未通过,4.专家未通过,5.教育局未通过,6.活动已结束，未审批
+        type: integer
+      two_indicator_id:
+        description: 二级指标id
+        type: integer
+      two_indicator_name:
+        description: 二级指标名称
+        type: string
+      user_activity_indicator_id:
+        description: 申报id
+        type: integer
+    type: object
+  resp.ExpertAuthList:
+    properties:
+      auth_day:
+        description: 授权日期，格式2006-01-02
+        type: string
+      expert_auth_indicator_list:
+        description: 专家授权指标
+        items:
+          $ref: '#/definitions/resp.OneIndicatorOnlyName'
+        type: array
+      export_auth:
+        description: 专家是否授权 0：未授权 1：已授权
+        type: integer
+      identity_card:
+        description: 身份证号
+        type: string
+      phone:
+        description: 手机号
+        type: string
+      user_id:
+        description: 用户id
+        type: string
+      user_name:
+        description: 用户名称
+        type: string
+      user_sex:
+        description: 1：男，2：女
+        type: integer
+    type: object
+  resp.GetActivityDetailResp:
+    properties:
+      activity_id:
+        description: 主键id
+        type: integer
+      activity_name:
+        description: 活动名称
+        type: string
+      activity_one_indicators:
+        description: 一级指标列表
+        items:
+          $ref: '#/definitions/resp.ActivityOneIndicator'
+        type: array
+      create_time:
+        description: 创建时间
+        type: string
+      description:
+        description: 申报须知
+        type: string
+      end_time:
+        description: 结束时间
+        type: string
+      review_num:
+        description: 当前已审核人数
+        type: integer
+      start_time:
+        description: 开始时间
+        type: string
+      url:
+        description: 活动文件url
+        type: string
+      year:
+        description: 年份
+        type: integer
+    type: object
+  resp.GetActivityInfoToUserResp:
+    properties:
+      activity_id:
+        description: 主键id
+        type: integer
+      activity_name:
+        description: 活动名称
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      description:
+        description: 申报须知
+        type: string
+      end_time:
+        description: 结束时间
+        type: string
+      review_num:
+        description: 当前已审核人数
+        type: integer
+      start_time:
+        description: 开始时间
+        type: string
+      url:
+        description: 活动文件url
+        type: string
+      year:
+        description: 年份
+        type: integer
+    type: object
+  resp.GetActivityListResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/resp.Activity'
+        type: array
+      total:
+        type: integer
+    type: object
+  resp.GetActivityListToUserResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/resp.ActivityListToUser'
+        type: array
+      total:
+        type: integer
+    type: object
+  resp.GetActivityTwoIndicatorListResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/dao.ActivityTwoIndicator'
+        type: array
+    type: object
+  resp.GetActivityYearListResp:
+    properties:
+      years:
+        items:
+          type: integer
+        type: array
+    type: object
+  resp.GetAnnouncementByIdResp:
+    properties:
+      annex:
+        description: 附件链接
+        type: string
+      announcement_id:
+        description: 主键id
+        type: integer
+      content:
+        description: 内容
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      title:
+        description: 标题
+        type: string
+      user_id:
+        description: 用户id
+        type: string
+      user_name:
+        description: 用户名称
+        type: string
+    type: object
+  resp.GetAnnouncementListResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/resp.Announcement'
+        type: array
+      total:
+        type: integer
+    type: object
+  resp.GetAwardRateResp:
+    properties:
+      award_num:
+        description: 获奖人数
+        type: integer
+      declare_num:
+        description: 申报数量
+        type: integer
+    type: object
+  resp.GetAwardsSetListResp:
+    properties:
+      activity_id:
+        description: 活动id
+        type: integer
+      activity_name:
+        description: 活动名称
+        type: string
+      award_num:
+        description: 获奖人数
+        type: integer
+      first_prize_num:
+        description: 一等奖
+        type: integer
+      list:
+        items:
+          $ref: '#/definitions/dao.UserActivity'
+        type: array
+      second_prize_num:
+        description: 二等奖
+        type: integer
+      third_prize_num:
+        description: 三等奖
+        type: integer
+      total:
+        type: integer
+    type: object
+  resp.GetDeclareRateResp:
+    properties:
+      declare_num:
+        description: 申报数量
+        type: integer
+      sum_num:
+        description: 总人数
+        type: integer
+    type: object
+  resp.GetEdbReviewListResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/dao.EdbReviewItem'
+        type: array
+      total:
+        type: integer
+    type: object
+  resp.GetEverySchoolAwardNumResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/dao.SchoolAwardNum'
+        type: array
+    type: object
+  resp.GetEveryTeacherTypeAwardNumResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/dao.TeacherTypeAwardNum'
+        type: array
+    type: object
+  resp.GetEveryYearAwardNumResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/dao.YearDeclareAwardNum'
+        type: array
+    type: object
+  resp.GetExpertAuthListByWhereResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/resp.ExpertAuthList'
+        type: array
+      total:
+        type: integer
+    type: object
+  resp.GetHistoryActivityListResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/dao.ActivityAndUserInfo'
+        type: array
+      total:
+        type: integer
+    type: object
+  resp.GetLatestActivityResp:
+    properties:
+      activity_id:
+        description: 主键id
+        type: integer
+      activity_name:
+        description: 活动名称
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      description:
+        description: 申报须知
+        type: string
+      end_time:
+        description: 结束时间
+        type: string
+      review_num:
+        description: 当前已审核人数
+        type: integer
+      start_time:
+        description: 开始时间
+        type: string
+      url:
+        description: 活动文件url
+        type: string
+      year:
+        description: 年份
+        type: integer
+    type: object
+  resp.GetOneIndicatorListResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/resp.OneIndicator'
+        type: array
+      total:
+        type: integer
+    type: object
+  resp.GetOperationRecordFromUaiResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/dao.OperationRecord'
+        type: array
+    type: object
+  resp.GetResultGroupByDeclareTypeResp:
+    properties:
+      declare_num:
+        type: integer
+      list:
+        items:
+          $ref: '#/definitions/dao.ResultGroupByDeclareType'
+        type: array
+      school_num:
+        type: integer
+    type: object
+  resp.GetReviewListResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/resp.ReviewItem'
+        type: array
+      total:
+        type: integer
+    type: object
+  resp.GetSchoolDeclareAwardRankResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/resp.SchoolDeclareAwardRank'
+        type: array
+      total:
+        type: integer
+    type: object
+  resp.GetSchoolListByNameResp:
+    properties:
+      school_list:
+        items:
+          $ref: '#/definitions/resp.School'
+        type: array
+    type: object
+  resp.GetSchoolListByPageResp:
+    properties:
+      school_list:
+        items:
+          $ref: '#/definitions/resp.School'
+        type: array
+      total:
+        type: integer
+    type: object
+  resp.GetSimpleSumStatsResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/resp.SimpleSumStats'
+        type: array
+    type: object
+  resp.GetSubjectEnumResp:
+    properties:
+      subject_list:
+        items:
+          $ref: '#/definitions/resp.Subject'
+        type: array
+    type: object
+  resp.GetTeacherTypeDeclareAwardRankResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/resp.TeacherTypeDeclareAwardRank'
+        type: array
+    type: object
+  resp.GetTokenAndUserInfoResp:
+    properties:
+      expires_time_at:
+        description: 过期时间戳
+        type: integer
+      token:
+        description: jwt的token（本系统独自维护)
+        type: string
+      user_id:
+        description: 用户id
+        type: string
+      user_name:
+        description: 用户名称
+        type: string
+      user_roles:
+        description: 用户角色类型，1：学校，2：专家，3：教育局，4：老师，5：管理员
+        items:
+          type: integer
+        type: array
+    type: object
+  resp.GetTwoIndicatorListResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/resp.TwoIndicator'
+        type: array
+      total:
+        type: integer
+    type: object
+  resp.GetUploadTokenResp:
+    properties:
+      token:
+        type: string
+    type: object
+  resp.GetUserActivityDeclareDetailResp:
+    properties:
+      activity_id:
+        description: 活动id
+        type: integer
+      birthday:
+        description: 出生日期
+        type: string
+      declare_type:
+        description: 1:幼教、2:小学、3:初中、4:高中、5:职校、6:教研
+        type: integer
+      identity_card:
+        description: 身份证号
+        type: string
+      list:
+        items:
+          $ref: '#/definitions/resp.UserActivityIndicator'
+        type: array
+      phone:
+        description: 手机号
+        type: string
+      school_id:
+        description: 学校id
+        type: string
+      school_name:
+        description: 学校名称
+        type: string
+      subject_code:
+        description: 科目code
+        type: string
+      user_id:
+        description: 用户id
+        type: string
+      user_name:
+        description: 用户姓名
+        type: string
+      user_sex:
+        description: 1：男，2：女
+        type: integer
+    type: object
+  resp.GetUserActivityDeclareResultResp:
+    properties:
+      declare_num:
+        description: 总申报项数
+        type: integer
+      final_score:
+        description: 最终得分（各项通过的审核）
+        type: integer
+      list:
+        items:
+          $ref: '#/definitions/resp.ActivityIndicatorInfo'
+        type: array
+      prize:
+        description: 奖金
+        type: integer
+      rank_prize:
+        description: 0：无，1：一等奖，2：二等奖，3：三等奖
+        type: integer
+    type: object
+  resp.GetUserActivityDeclareStatusListResp:
+    properties:
+      declare_num:
+        description: 总申报项数
+        type: integer
+      list:
+        items:
+          $ref: '#/definitions/resp.OneIndicatorDeclareStatusList'
+        type: array
+      no_pass_num:
+        description: 未通过申报项数
+        type: integer
+      pass_num:
+        description: 已通过申报项数
+        type: integer
+      wait_review:
+        description: 待审核申报项数
+        type: integer
+    type: object
+  resp.GetUserActivityIndicatorResp:
+    properties:
+      award_date:
+        description: 获奖日期
+        type: string
+      certificate_end_date:
+        description: 证书有效期——结束时间
+        type: string
+      certificate_start_date:
+        description: 证书有效期——开始时间
+        type: string
+      certificate_type:
+        description: 1.证书；需要填写证书有效期，2.证明；不需要有效期
+        type: integer
+      certificate_url:
+        description: 证书url
+        type: string
+      content:
+        description: 评分标准说明
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      finish_review_num:
+        description: 当前已审核人数
+        type: integer
+      list:
+        items:
+          $ref: '#/definitions/dao.JudgesVerify'
+        type: array
+      one_indicator_id:
+        description: 一级指标id
+        type: integer
+      one_indicator_name:
+        description: 一级指标名称
+        type: string
+      review_process:
+        description: 当前审核进程状态，1：学校，2：专家，3：教育局，4：结束
+        type: integer
+      score:
+        description: 分值
+        type: integer
+      status:
+        description: 审核状态:1.已提交 ,2.已通过,3.学校未通过,4.专家未通过,5.教育局未通过,6.活动已结束，未审批,
+        type: integer
+      two_indicator_id:
+        description: 二级指标id
+        type: integer
+      two_indicator_name:
+        description: 二级指标名称
+        type: string
+      user_activity_id:
+        description: 用户申报活动的id
+        type: integer
+      user_activity_indicator_id:
+        description: 主键id
+        type: integer
+      user_id:
+        description: 用户id
+        type: string
+      user_name:
+        description: 用户姓名
+        type: string
+    type: object
+  resp.GetUserDeclareRecordListByYearResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/resp.UserDeclareRecord'
+        type: array
+      total:
+        type: integer
+    type: object
+  resp.GetUserDeclareResultAppResp:
+    properties:
+      activity_id:
+        description: 活动id
+        type: integer
+      activity_name:
+        description: 活动名称
+        type: string
+      edb_score:
+        description: 教育局评分
+        type: integer
+      expert_no_pass_score:
+        description: 专家评分（未通过）
+        type: integer
+      expert_pass_score:
+        description: 专家评分（通过）
+        type: integer
+      final_score:
+        description: 最终得分（各项通过的审核）
+        type: integer
+      prize:
+        description: 奖金
+        type: integer
+      rank:
+        description: 排名
+        type: integer
+      rank_prize:
+        description: 0：无，1：一等奖，2：二等奖，3：三等奖
+        type: integer
+      school_score:
+        description: 学校评分
+        type: integer
+      teacher_score:
+        description: 老师自评
+        type: integer
+    type: object
+  resp.GetUserDeclaresToEdbResp:
+    properties:
+      final_score:
+        description: 最终得分（各项通过的审核）
+        type: integer
+      list:
+        items:
+          $ref: '#/definitions/resp.UserDeclaresToEdb'
+        type: array
+      one_indicator_list:
+        description: 一级指标列表
+        items:
+          $ref: '#/definitions/dao.ActivityOneIndicator'
+        type: array
+    type: object
+  resp.GetUserHistoryDeclareResultListResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/dao.UserHistoryDeclareResult'
+        type: array
+      total:
+        type: integer
+    type: object
+  resp.GetUserInfoResp:
+    properties:
+      avatar:
+        description: 头像
+        type: string
+      birthday:
+        description: 出生日期
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      declare_type:
+        description: 1:幼教、2:小学、3:初中、4:高中、5:职校、6:教研
+        type: integer
+      identity_card:
+        description: 身份证号
+        type: string
+      phone:
+        description: 手机号
+        type: string
+      roles:
+        description: 角色，1：学校，2：专家，3：教育局，4：教师，5：超级管理员
+        items:
+          type: integer
+        type: array
+      school_id:
+        description: 学校id
+        type: string
+      school_name:
+        description: 学校名称
+        type: string
+      subject_code:
+        description: 科目code
+        type: string
+      user_id:
+        description: 用户id
+        type: string
+      user_name:
+        description: 用户名称
+        type: string
+      user_sex:
+        description: 1：男，2：女
+        type: integer
+      year:
+        description: 年份
+        type: integer
+    type: object
+  resp.GetUserListByWhereResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/dao.UserInfo'
+        type: array
+      total:
+        type: integer
+    type: object
+  resp.GetUserNoticeListResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/dao.Notice'
+        type: array
+      total:
+        type: integer
+    type: object
+  resp.GetUsersByNameResp:
+    properties:
+      total:
+        type: integer
+      user_list:
+        items:
+          $ref: '#/definitions/resp.UserInfo'
+        type: array
+    type: object
+  resp.GetWaitReviewListResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/resp.WaitReview'
+        type: array
+      total:
+        type: integer
+    type: object
+  resp.GetYearDeclareAwardRankResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/resp.YearDeclareAwardRank'
+        type: array
+    type: object
+  resp.JudgesVerifyPass:
+    properties:
+      is_pass:
+        description: 0：未通过，1：通过
+        type: integer
+      judges_id:
+        description: 评委id
+        type: string
+      judges_name:
+        description: 评委姓名
+        type: string
+      judges_type:
+        description: 评委类型，1：学校，2：专家，3：教育局
+        type: integer
+    type: object
+  resp.OneIndicator:
+    properties:
+      content:
+        description: 评分标准说明
+        type: string
+      count:
+        description: 二级指标个数
+        type: integer
+      create_time:
+        description: 创建时间
+        type: string
+      list:
+        description: 二级指标列表
+        items:
+          $ref: '#/definitions/dao.TwoIndicator'
+        type: array
+      one_indicator_id:
+        description: 主键id
+        type: integer
+      one_indicator_name:
+        description: 一级指标名称
+        type: string
+    type: object
+  resp.OneIndicatorDeclareStatusList:
+    properties:
+      content:
+        description: 评分标准说明
+        type: string
+      declare_status_list:
+        items:
+          $ref: '#/definitions/resp.DeclareStatus'
+        type: array
+      one_indicator_id:
+        description: 一级指标id
+        type: integer
+      one_indicator_name:
+        description: 一级指标名称
+        type: string
+    type: object
+  resp.OneIndicatorOnlyName:
+    properties:
+      one_indicator_id:
+        type: integer
+      one_indicator_name:
+        type: string
+      two_list:
+        description: 二级指标列表
+        items:
+          $ref: '#/definitions/resp.TwoIndicatorOnlyName'
+        type: array
+    type: object
+  resp.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      error_stack: {}
+      msg:
+        type: string
+    type: object
+  resp.ReviewItem:
+    properties:
+      activity_id:
+        description: 活动id
+        type: integer
+      create_time:
+        description: 创建时间
+        type: string
+      declare_type:
+        description: 1:幼教、2:小学、3:初中、4:高中、5:职校、6:教研
+        type: integer
+      one_indicator_id:
+        description: 所属一级指标
+        type: integer
+      one_indicator_name:
+        description: 一级指标名称
+        type: string
+      review_status:
+        description: 审核状态 1:待审核，2：未通过，3：通过
+        type: integer
+      school_id:
+        description: 学校id
+        type: string
+      school_name:
+        description: 学校名称
+        type: string
+      score:
+        description: 分值
+        type: integer
+      status:
+        description: 审核状态:1.已提交 ,2.已通过,3.学校未通过,4.专家未通过,5.教育局未通过,6.活动已结束，未审批,
+        type: integer
+      subject_code:
+        description: 科目code
+        type: string
+      two_indicator_id:
+        description: 二级指标id
+        type: integer
+      two_indicator_name:
+        description: 二级指标名称
+        type: string
+      user_activity_indicator_id:
+        description: 主键id
+        type: integer
+      user_id:
+        description: 用户id
+        type: string
+      user_name:
+        description: 用户姓名
+        type: string
+      user_sex:
+        description: 1：男，2：女
+        type: integer
+      year:
+        description: 年份
+        type: integer
+    type: object
+  resp.SaveAnnouncementResp:
+    properties:
+      announcement_id:
+        description: 公告id
+        type: integer
+    type: object
+  resp.School:
+    properties:
+      school_id:
+        type: string
+      school_name:
+        type: string
+    type: object
+  resp.SchoolDeclareAwardRank:
+    properties:
+      award_num:
+        description: 获奖人数
+        type: integer
+      award_on_year:
+        description: 获奖同比
+        type: number
+      award_rate:
+        description: 获奖占比
+        type: number
+      declare_num:
+        description: 申报数量
+        type: integer
+      declare_on_year:
+        description: 申报同比
+        type: number
+      first_prize_num:
+        description: 一等奖
+        type: integer
+      school_id:
+        description: 学校id
+        type: string
+      school_name:
+        description: 学校名称
+        type: string
+      second_prize_num:
+        description: 二等奖
+        type: integer
+      third_prize_num:
+        description: 三等奖
+        type: integer
+    type: object
+  resp.SimpleSumStats:
+    properties:
+      num:
+        description: 数量
+        type: integer
+      type:
+        description: 1:学校，2：老师，3：获奖，4：申报
+        type: integer
+      year_on_year:
+        description: 同比
+        type: number
+    type: object
+  resp.Subject:
+    properties:
+      subject_code:
+        type: string
+      subject_name:
+        type: string
+    type: object
+  resp.TeacherTypeDeclareAwardRank:
+    properties:
+      award_num:
+        description: 获奖人数
+        type: integer
+      award_on_year:
+        description: 获奖同比
+        type: number
+      award_rate:
+        description: 获奖占比
+        type: number
+      declare_num:
+        description: 申报数量
+        type: integer
+      declare_on_year:
+        description: 申报同比
+        type: number
+      declare_type:
+        description: 1:幼教、2:小学、3:初中、4:高中、5:职校、6:教研
+        type: integer
+      first_prize_num:
+        description: 一等奖
+        type: integer
+      second_prize_num:
+        description: 二等奖
+        type: integer
+      third_prize_num:
+        description: 三等奖
+        type: integer
+    type: object
+  resp.TwoIndicator:
+    properties:
+      create_time:
+        description: 创建时间
+        type: string
+      one_indicator_id:
+        description: 所属一级指标
+        type: integer
+      one_indicator_name:
+        description: 一级指标名称
+        type: string
+      score:
+        description: 分值
+        type: integer
+      two_indicator_id:
+        description: 主键id
+        type: integer
+      two_indicator_name:
+        description: 二级指标名称
+        type: string
+    type: object
+  resp.TwoIndicatorOnlyName:
+    properties:
+      two_indicator_id:
+        description: 二级指标id
+        type: integer
+      two_indicator_name:
+        description: 二级指标名称
+        type: string
+    type: object
+  resp.UserActivityIndicator:
+    properties:
+      award_date:
+        description: 获奖日期
+        type: string
+      certificate_end_date:
+        description: 证书有效期——结束时间
+        type: string
+      certificate_start_date:
+        description: 证书有效期——开始时间
+        type: string
+      certificate_type:
+        description: 1.证书；需要填写证书有效期，2.证明；不需要有效期
+        type: integer
+      certificate_url:
+        description: 证书url
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      finish_review_num:
+        description: 当前已审核人数
+        type: integer
+      one_indicator_id:
+        description: 一级指标id
+        type: integer
+      review_process:
+        description: 当前审核进程状态，1：学校，2：专家，3：教育局，4：结束
+        type: integer
+      status:
+        description: 审核状态:1.已提交 ,2.已通过,3.学校未通过,4.专家未通过,5.教育局未通过,6.活动已结束，未审批,
+        type: integer
+      two_indicator_id:
+        description: 二级指标id
+        type: integer
+      user_activity_id:
+        description: 用户申报活动的id
+        type: integer
+      user_activity_indicator_id:
+        description: 主键id
+        type: integer
+    type: object
+  resp.UserDeclareRecord:
+    properties:
+      activity_id:
+        description: 活动id
+        type: integer
+      create_time:
+        description: 创建时间
+        type: string
+      judges_verify_list:
+        description: 审核列表
+        items:
+          $ref: '#/definitions/resp.JudgesVerifyPass'
+        type: array
+      one_indicator_id:
+        description: 所属一级指标
+        type: integer
+      one_indicator_name:
+        description: 一级指标名称
+        type: string
+      score:
+        description: 分值
+        type: integer
+      status:
+        description: 审核状态:1.待审核 ,2.已通过,3.学校未通过,5.未通过（教育局）,
+        type: integer
+      two_indicator_id:
+        description: 二级指标id
+        type: integer
+      two_indicator_name:
+        description: 二级指标名称
+        type: string
+      user_activity_id:
+        description: 用户申报活动的id
+        type: integer
+      user_activity_indicator_id:
+        description: 用户活动申报二级指标id
+        type: integer
+    type: object
+  resp.UserDeclaresToEdb:
+    properties:
+      activity_id:
+        description: 活动id
+        type: integer
+      certificate_url:
+        description: 证书url
+        type: string
+      judges_verify_list:
+        description: 审核列表
+        items:
+          $ref: '#/definitions/resp.JudgesVerifyPass'
+        type: array
+      one_indicator_id:
+        description: 所属一级指标
+        type: integer
+      one_indicator_name:
+        description: 一级指标名称
+        type: string
+      review_process:
+        description: 当前审核进程状态，1：学校，2：专家，3：教育局，4：结束
+        type: integer
+      score:
+        description: 分值
+        type: integer
+      two_indicator_id:
+        description: 二级指标id
+        type: integer
+      two_indicator_name:
+        description: 二级指标名称
+        type: string
+      user_activity_indicator_id:
+        description: 用户活动申报二级指标id
+        type: integer
+    type: object
+  resp.UserInfo:
+    properties:
+      identity_card:
+        description: 身份证号
+        type: string
+      phone:
+        description: 手机号
+        type: string
+      roles:
+        description: 角色列表，1：学校，2：专家，3：教育局，4：老师，5：管理员
+        items:
+          type: integer
+        type: array
+      school_id:
+        description: 学校id
+        type: string
+      school_name:
+        description: 学校名称
+        type: string
+      user_id:
+        description: 用户id
+        type: string
+      user_name:
+        description: 用户名称
+        type: string
+      user_sex:
+        description: 1：男，2：女
+        type: integer
+    type: object
+  resp.WaitReview:
+    properties:
+      declare_time:
+        description: 申报时间
+        type: string
+      one_indicator_id:
+        description: 一级指标id
+        type: integer
+      one_indicator_name:
+        description: 一级指标名称
+        type: string
+      two_indicator_id:
+        description: 二级指标id
+        type: integer
+      two_indicator_name:
+        description: 二级指标名称
+        type: string
+      user_activity_indicator_id:
+        description: 用户活动申报单个项目的id
+        type: integer
+      user_id:
+        description: 用户id
+        type: string
+      user_name:
+        description: 用户姓名
+        type: string
+    type: object
+  resp.YearDeclareAwardRank:
+    properties:
+      award_num:
+        description: 获奖人数
+        type: integer
+      award_on_year:
+        description: 获奖同比
+        type: number
+      award_rate:
+        description: 获奖占比
+        type: number
+      declare_num:
+        description: 申报数量
+        type: integer
+      declare_on_year:
+        description: 申报同比
+        type: number
+      first_prize_num:
+        description: 一等奖
+        type: integer
+      num:
+        description: 数量
+        type: integer
+      second_prize_num:
+        description: 二等奖
+        type: integer
+      third_prize_num:
+        description: 三等奖
+        type: integer
+      year:
+        description: 年份
+        type: integer
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:7850
+info:
+  contact:
+    email: support@swagger_controller.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a teachers-awards server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger teachers-awards API
+  version: "1.0"
+paths:
+  /v1/activity/delete:
+    delete:
+      parameters:
+      - description: 活动id
+        in: query
+        name: activity_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 删除活动
+      tags:
+      - Activity
+  /v1/activity/early/end:
+    put:
+      parameters:
+      - description: 活动id
+        in: formData
+        name: activity_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 提前结束活动
+      tags:
+      - Activity
+  /v1/activity/edb/review/list:
+    get:
+      parameters:
+      - description: 用户姓名
+        in: query
+        name: user_name
+        type: string
+      - description: 1：男，2：女
+        in: query
+        name: user_sex
+        type: integer
+      - description: 科目code
+        in: query
+        name: subject_code
+        type: string
+      - description: 学校id
+        in: query
+        name: school_id
+        type: string
+      - description: 学校名称
+        in: query
+        name: school_name
+        type: string
+      - description: 审核状态 0:全部 1:待审核，2：已审核
+        in: query
+        name: status
+        type: integer
+      - description: 是否仅获取数量
+        in: query
+        name: only_count
+        type: boolean
+      - description: 页数
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetEdbReviewListResp'
+              type: object
+      summary: 审核列表（教育局）
+      tags:
+      - ReviewDeclare
+  /v1/activity/get/detail:
+    get:
+      parameters:
+      - description: 活动id
+        in: query
+        name: activity_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetActivityDetailResp'
+              type: object
+      summary: 获取活动详情
+      tags:
+      - Activity
+  /v1/activity/latest:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetLatestActivityResp'
+              type: object
+      summary: 获取最新活动
+      tags:
+      - Activity
+  /v1/activity/list:
+    get:
+      parameters:
+      - description: 活动名称
+        in: query
+        name: activity_name
+        type: string
+      - description: 活动名称
+        in: query
+        name: year
+        type: integer
+      - description: 页数
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetActivityListResp'
+              type: object
+      summary: 获取活动列表
+      tags:
+      - Activity
+  /v1/activity/one/indicator/delete:
+    delete:
+      parameters:
+      - description: 活动id
+        in: query
+        name: activity_id
+        required: true
+        type: integer
+      - description: 一级指标id
+        in: query
+        name: one_indicator_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 删除活动下的一级指标
+      tags:
+      - Activity
+  /v1/activity/review/awards/list:
+    get:
+      parameters:
+      - description: 活动id
+        in: query
+        name: activity_id
+        required: true
+        type: integer
+      - description: 用户姓名
+        in: query
+        name: user_name
+        type: string
+      - description: 1：男，2：女
+        in: query
+        name: user_sex
+        type: integer
+      - description: 科目code
+        in: query
+        name: subject_code
+        type: string
+      - description: 学校id
+        in: query
+        name: school_id
+        type: string
+      - description: 学校名称
+        in: query
+        name: school_name
+        type: string
+      - description: 申报类型
+        in: query
+        name: declare_type
+        type: integer
+      - description: 身份证号
+        in: query
+        name: identity_card
+        type: string
+      - description: 名次，0：无，1：一等奖，2：二等奖，3：三等奖
+        in: query
+        name: rank_prize
+        type: integer
+      - description: 最终得分（各项通过的审核）
+        in: query
+        name: final_score
+        type: integer
+      - description: 页数
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetAwardsSetListResp'
+              type: object
+      summary: 获取奖项设置列表（教育局）
+      tags:
+      - ReviewDeclare
+  /v1/activity/review/batch/pass:
+    post:
+      parameters:
+      - description: body请求体
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/req.BatchPassReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 批量审核通过
+      tags:
+      - ReviewDeclare
+  /v1/activity/review/commit:
+    post:
+      parameters:
+      - description: 用户活动申报二级指标id
+        in: formData
+        name: user_activity_indicator_id
+        required: true
+        type: integer
+      - description: 0：未通过，1：通过
+        in: formData
+        name: is_pass
+        required: true
+        type: integer
+      - description: 审核意见
+        in: formData
+        name: opinion
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 提交审核
+      tags:
+      - ReviewDeclare
+  /v1/activity/review/commit/result:
+    post:
+      parameters:
+      - description: 活动id
+        in: formData
+        name: activity_id
+        required: true
+        type: integer
+      - description: 申报类型
+        in: formData
+        name: declare_type
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 提交活动评审结果
+      tags:
+      - ReviewDeclare
+  /v1/activity/review/edb/declare/user:
+    post:
+      parameters:
+      - description: body请求体
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/req.EdbDeclareToUserReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 教育局给用户添加申报
+      tags:
+      - ReviewDeclare
+  /v1/activity/review/history:
+    get:
+      parameters:
+      - description: 用户姓名
+        in: query
+        name: user_name
+        type: string
+      - description: 1：男，2：女
+        in: query
+        name: user_sex
+        type: integer
+      - description: 科目code
+        in: query
+        name: subject_code
+        type: string
+      - description: 学校id
+        in: query
+        name: school_id
+        type: string
+      - description: 学校名称
+        in: query
+        name: school_name
+        type: string
+      - description: 年份
+        in: query
+        name: year
+        type: integer
+      - description: 申报类型
+        in: query
+        name: declare_type
+        type: integer
+      - description: 身份证号
+        in: query
+        name: identity_card
+        type: string
+      - description: 0：无，1：一等奖，2：二等奖，3：三等奖
+        in: query
+        name: rank_prize
+        type: integer
+      - description: 排名
+        in: query
+        name: rank
+        type: integer
+      - description: 最终得分（各项通过的审核）
+        in: query
+        name: final_score
+        type: integer
+      - description: 页数
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetHistoryActivityListResp'
+              type: object
+      summary: 获取历史活动评审结果列表
+      tags:
+      - ReviewDeclare
+  /v1/activity/review/list:
+    get:
+      parameters:
+      - description: 评委id
+        in: query
+        name: judges_id
+        type: string
+      - description: 用户姓名
+        in: query
+        name: user_name
+        type: string
+      - description: 1：男，2：女
+        in: query
+        name: user_sex
+        type: integer
+      - description: 科目code
+        in: query
+        name: subject_code
+        type: string
+      - description: 学校id
+        in: query
+        name: school_id
+        type: string
+      - description: 学校名称
+        in: query
+        name: school_name
+        type: string
+      - description: 年份
+        in: query
+        name: year
+        type: integer
+      - description: 一级指标名称
+        in: query
+        name: one_indicator_name
+        type: string
+      - description: 二级指标名称
+        in: query
+        name: two_indicator_name
+        type: string
+      - description: 审核状态 0:全部 1:待审核，2：未通过，3：已通过，4：已审核
+        in: query
+        name: review_status
+        type: integer
+      - description: 当前审核进程，1：学校，2：专家，3：教育局
+        in: query
+        name: review_process
+        required: true
+        type: integer
+      - description: 是否仅获取数量
+        in: query
+        name: only_count
+        type: boolean
+      - description: 页数
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetReviewListResp'
+              type: object
+      summary: 审核列表
+      tags:
+      - ReviewDeclare
+  /v1/activity/review/set/awards:
+    post:
+      parameters:
+      - description: 活动id
+        in: formData
+        name: activity_id
+        required: true
+        type: integer
+      - description: 用户id
+        in: formData
+        name: user_id
+        required: true
+        type: string
+      - description: 名次
+        in: formData
+        name: rank_prize
+        required: true
+        type: integer
+      - description: 奖金
+        in: formData
+        name: prize
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 名次评定（设置奖项）
+      tags:
+      - ReviewDeclare
+  /v1/activity/review/update/two/id:
+    put:
+      parameters:
+      - description: body请求体
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/req.UpdateTwoIndicatorIdReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 更新二级指标id
+      tags:
+      - ReviewDeclare
+  /v1/activity/review/wait/list:
+    get:
+      parameters:
+      - description: 当前审核进程，1：学校，2：专家，3：教育局，4：结束
+        in: query
+        name: review_process
+        required: true
+        type: integer
+      - description: 页数
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetWaitReviewListResp'
+              type: object
+      summary: 获取待办事项列表
+      tags:
+      - ReviewDeclare
+  /v1/activity/save:
+    post:
+      parameters:
+      - description: 请求body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/req.CreateOrUpdateActivityReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 创建或者更新活动
+      tags:
+      - Activity
+  /v1/activity/two/indicator/delete:
+    delete:
+      parameters:
+      - description: 活动id
+        in: query
+        name: activity_id
+        required: true
+        type: integer
+      - description: 二级指标id
+        in: query
+        name: two_indicator_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 删除活动下的二级指标
+      tags:
+      - Activity
+  /v1/activity/two/indicator/list:
+    get:
+      parameters:
+      - description: 活动id
+        in: query
+        name: activity_id
+        required: true
+        type: integer
+      - description: 一级指标id
+        in: query
+        name: one_indicator_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetActivityTwoIndicatorListResp'
+              type: object
+      summary: 获取活动二级指标列表
+      tags:
+      - Activity
+  /v1/activity/year/list:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetActivityYearListResp'
+              type: object
+      summary: 获取年度列表
+      tags:
+      - Activity
+  /v1/announcement/delete:
+    delete:
+      parameters:
+      - description: 公告id
+        in: query
+        name: announcement_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 删除公告
+      tags:
+      - Announcement
+  /v1/announcement/get:
+    get:
+      parameters:
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: string
+      - description: 公告id
+        in: query
+        name: announcement_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetAnnouncementByIdResp'
+              type: object
+      summary: 根据id获取公告详情
+      tags:
+      - Announcement
+  /v1/announcement/list:
+    get:
+      parameters:
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: string
+      - description: 输入的内容
+        in: query
+        name: input_content
+        type: string
+      - description: 发布时间，格式2006-01-02
+        in: query
+        name: publish_time
+        type: string
+      - description: 按时间升序或者降序
+        in: query
+        name: create_time_order
+        type: string
+      - description: 页数
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetAnnouncementListResp'
+              type: object
+      summary: 获取公告列表
+      tags:
+      - Announcement
+  /v1/announcement/save:
+    post:
+      parameters:
+      - description: 公告id
+        in: formData
+        name: announcement_id
+        type: integer
+      - description: 用户id
+        in: formData
+        name: user_id
+        required: true
+        type: string
+      - description: 用户名称
+        in: formData
+        name: user_name
+        required: true
+        type: string
+      - description: 标题
+        in: formData
+        name: title
+        required: true
+        type: string
+      - description: 内容
+        in: formData
+        name: content
+        required: true
+        type: string
+      - description: 附件
+        in: formData
+        name: annex
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.SaveAnnouncementResp'
+              type: object
+      summary: 保存公告
+      tags:
+      - Announcement
+  /v1/announcement/user/all/read:
+    put:
+      parameters:
+      - description: 用户id
+        in: formData
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 公告全部设置为已读
+      tags:
+      - Announcement
+  /v1/export/awards/set/list:
+    get:
+      parameters:
+      - description: 活动id
+        in: query
+        name: activity_id
+        required: true
+        type: integer
+      - description: 用户姓名
+        in: query
+        name: user_name
+        type: string
+      - description: 1：男，2：女
+        in: query
+        name: user_sex
+        type: integer
+      - description: 科目code
+        in: query
+        name: subject_code
+        type: string
+      - description: 学校id
+        in: query
+        name: school_id
+        type: string
+      - description: 学校名称
+        in: query
+        name: school_name
+        type: string
+      - description: 申报类型
+        in: query
+        name: declare_type
+        type: integer
+      - description: 身份证号
+        in: query
+        name: identity_card
+        type: string
+      - description: 名次，0：无，1：一等奖，2：二等奖，3：三等奖
+        in: query
+        name: rank_prize
+        type: integer
+      - description: 最终得分（各项通过的审核）
+        in: query
+        name: final_score
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 导出奖项设置列表（教育局）
+      tags:
+      - Export
+  /v1/export/edb/review/list:
+    get:
+      parameters:
+      - description: 用户姓名
+        in: query
+        name: user_name
+        type: string
+      - description: 1：男，2：女
+        in: query
+        name: user_sex
+        type: integer
+      - description: 科目code
+        in: query
+        name: subject_code
+        type: string
+      - description: 学校id
+        in: query
+        name: school_id
+        type: string
+      - description: 学校名称
+        in: query
+        name: school_name
+        type: string
+      - description: 审核状态 0:全部 1:待审核，2：已审核
+        in: query
+        name: status
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 导出审核列表（教育局）
+      tags:
+      - Export
+  /v1/export/history/activity/list:
+    get:
+      parameters:
+      - description: 用户姓名
+        in: query
+        name: user_name
+        type: string
+      - description: 1：男，2：女
+        in: query
+        name: user_sex
+        type: integer
+      - description: 科目code
+        in: query
+        name: subject_code
+        type: string
+      - description: 学校id
+        in: query
+        name: school_id
+        type: string
+      - description: 学校名称
+        in: query
+        name: school_name
+        type: string
+      - description: 年份
+        in: query
+        name: year
+        type: integer
+      - description: 申报类型
+        in: query
+        name: declare_type
+        type: integer
+      - description: 身份证号
+        in: query
+        name: identity_card
+        type: string
+      - description: 0：无，1：一等奖，2：二等奖，3：三等奖
+        in: query
+        name: rank_prize
+        type: integer
+      - description: 排名
+        in: query
+        name: rank
+        type: integer
+      - description: 最终得分（各项通过的审核）
+        in: query
+        name: final_score
+        type: integer
+      produces:
+      - application/octet-stream
+      responses: {}
+      summary: 导出历史活动评审结果列表
+      tags:
+      - Export
+  /v1/export/review/list:
+    get:
+      parameters:
+      - description: 评委id
+        in: query
+        name: judges_id
+        type: string
+      - description: 用户姓名
+        in: query
+        name: user_name
+        type: string
+      - description: 1：男，2：女
+        in: query
+        name: user_sex
+        type: integer
+      - description: 科目code
+        in: query
+        name: subject_code
+        type: string
+      - description: 学校id
+        in: query
+        name: school_id
+        type: string
+      - description: 学校名称
+        in: query
+        name: school_name
+        type: string
+      - description: 年份
+        in: query
+        name: year
+        type: integer
+      - description: 一级指标名称
+        in: query
+        name: one_indicator_name
+        type: string
+      - description: 二级指标名称
+        in: query
+        name: two_indicator_name
+        type: string
+      - description: 审核状态 0:全部 1:待审核，2：未通过，3：已通过，4：已审核
+        in: query
+        name: review_status
+        type: integer
+      - description: 当前审核进程，1：学校，2：专家，3：教育局
+        in: query
+        name: review_process
+        required: true
+        type: integer
+      produces:
+      - application/octet-stream
+      responses: {}
+      summary: 导出审核列表
+      tags:
+      - Export
+  /v1/export/user/declare/record/list:
+    get:
+      parameters:
+      - description: 年份
+        in: query
+        name: year
+        required: true
+        type: integer
+      - description: 申报的用户id
+        in: query
+        name: declare_user_id
+        required: true
+        type: string
+      - description: 角色类型，1：学校，2：专家，3：教育局，4：老师
+        in: query
+        name: role
+        required: true
+        type: integer
+      produces:
+      - application/octet-stream
+      responses: {}
+      summary: 导出用户的申报记录
+      tags:
+      - Export
+  /v1/indicator/one/delete/ids:
+    delete:
+      parameters:
+      - description: 一级指标ids
+        in: query
+        name: one_indicator_ids
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 删除一级指标
+      tags:
+      - Indicator
+  /v1/indicator/one/list:
+    get:
+      parameters:
+      - description: 输入的一级指标名称
+        in: query
+        name: input_name
+        type: string
+      - description: 输入的评分标准说明
+        in: query
+        name: input_content
+        type: string
+      - description: 是否获取二级指标
+        in: query
+        name: with_two
+        type: boolean
+      - description: 页数
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetOneIndicatorListResp'
+              type: object
+      summary: 获取一级指标列表
+      tags:
+      - Indicator
+  /v1/indicator/one/save:
+    post:
+      parameters:
+      - description: 一级指标id
+        in: formData
+        name: one_indicator_id
+        type: integer
+      - description: 一级指标名称
+        in: formData
+        name: one_indicator_name
+        required: true
+        type: string
+      - description: 评分标准说明
+        in: formData
+        name: content
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 创建或者更新一级指标
+      tags:
+      - Indicator
+  /v1/indicator/two/delete/ids:
+    delete:
+      parameters:
+      - description: 二级指标ids
+        in: query
+        name: two_indicator_ids
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 删除二级指标
+      tags:
+      - Indicator
+  /v1/indicator/two/list:
+    get:
+      parameters:
+      - description: 所属一级指标
+        in: query
+        name: one_indicator_id
+        type: integer
+      - description: 输入的二级指标名称
+        in: query
+        name: input_name
+        type: string
+      - description: 输入的分值
+        in: query
+        name: input_score
+        type: integer
+      - description: 页数
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetTwoIndicatorListResp'
+              type: object
+      summary: 获取二级指标列表
+      tags:
+      - Indicator
+  /v1/indicator/two/save:
+    post:
+      parameters:
+      - description: 二级指标id
+        in: formData
+        name: two_indicator_id
+        type: integer
+      - description: 二级指标名称
+        in: formData
+        name: two_indicator_name
+        required: true
+        type: string
+      - description: 分值
+        in: formData
+        name: score
+        required: true
+        type: integer
+      - description: 所属一级指标
+        in: formData
+        name: one_indicator_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.CreateOrUpdateTwoIndicatorResp'
+              type: object
+      summary: 创建或者更新二级指标
+      tags:
+      - Indicator
+  /v1/notice/user/all/delete:
+    delete:
+      parameters:
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 用户通知全部删除
+      tags:
+      - Notice
+  /v1/notice/user/all/read:
+    put:
+      parameters:
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 用户通知全部设置为已读
+      tags:
+      - Notice
+  /v1/notice/user/delete/ids:
+    delete:
+      parameters:
+      - description: 通知ids，英文
+        in: query
+        name: notice_ids
+        required: true
+        type: string
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 删除用户通知
+      tags:
+      - Notice
+  /v1/notice/user/list:
+    get:
+      parameters:
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: string
+      - description: 按时间升序或者降序
+        in: query
+        name: create_time_order
+        type: string
+      - description: 页数
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetUserNoticeListResp'
+              type: object
+      summary: 获取通知列表
+      tags:
+      - Notice
+  /v1/other/operation/record/uai:
+    get:
+      parameters:
+      - description: 用户活动申报单项目id
+        in: query
+        name: user_activity_indicator_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetOperationRecordFromUaiResp'
+              type: object
+      summary: 获取uai表的的操作记录
+      tags:
+      - Other
+  /v1/other/school/list/by/name:
+    get:
+      parameters:
+      - description: 学校名称
+        in: query
+        name: school_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetSchoolListByNameResp'
+              type: object
+      summary: 通过学校名称模糊匹配获取学校列表
+      tags:
+      - Other
+  /v1/other/school/list/page:
+    get:
+      parameters:
+      - description: 页数
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetSchoolListByPageResp'
+              type: object
+      summary: 分页获取中台学校列表
+      tags:
+      - Other
+  /v1/other/subject/enum:
+    get:
+      parameters:
+      - description: 是否刷新学科枚举，0：否，1：是
+        in: query
+        name: refresh
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetSubjectEnumResp'
+              type: object
+      summary: 获取学科枚举
+      tags:
+      - Other
+  /v1/other/upload/token:
+    get:
+      parameters:
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: string
+      - description: 文件名
+        in: query
+        name: file_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetUploadTokenResp'
+              type: object
+      summary: 获取上传token
+      tags:
+      - Other
+  /v1/public/get/info/token/user:
+    get:
+      parameters:
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: string
+      - description: 教学研token，600000：中台1.0 公版，6000001：中台2.0 诸暨版
+        in: query
+        name: jxy_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetTokenAndUserInfoResp'
+              type: object
+      summary: 获取token和用户的基本信息
+      tags:
+      - Public
+  /v1/statistics/activity/result:
+    get:
+      parameters:
+      - description: 活动id
+        in: query
+        name: activity_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetResultGroupByDeclareTypeResp'
+              type: object
+      summary: 获取活动统计结果
+      tags:
+      - Statistics
+  /v1/statistics/award/every/school:
+    get:
+      parameters:
+      - description: 年份
+        in: query
+        name: year
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetEverySchoolAwardNumResp'
+              type: object
+      summary: 各校获奖情况
+      tags:
+      - Statistics
+  /v1/statistics/award/every/year:
+    get:
+      parameters:
+      - description: 学校id
+        in: query
+        name: school_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetEveryYearAwardNumResp'
+              type: object
+      summary: 各年获奖情况
+      tags:
+      - Statistics
+  /v1/statistics/award/teacher/every/type:
+    get:
+      parameters:
+      - description: 年份
+        in: query
+        name: year
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetEveryTeacherTypeAwardNumResp'
+              type: object
+      summary: 各类教师获奖情况
+      tags:
+      - Statistics
+  /v1/statistics/data/detail/school:
+    get:
+      parameters:
+      - description: 学校名称
+        in: query
+        name: school_name
+        type: string
+      - description: 年份
+        in: query
+        name: year
+        required: true
+        type: integer
+      - description: 页数
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetSchoolDeclareAwardRankResp'
+              type: object
+      summary: 各校获奖情况（具体）
+      tags:
+      - Statistics
+  /v1/statistics/data/detail/teacher/type:
+    get:
+      parameters:
+      - description: 年份
+        in: query
+        name: year
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetTeacherTypeDeclareAwardRankResp'
+              type: object
+      summary: 各类教师获奖情况（具体）
+      tags:
+      - Statistics
+  /v1/statistics/data/detail/year:
+    get:
+      parameters:
+      - description: 学校id
+        in: query
+        name: school_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetYearDeclareAwardRankResp'
+              type: object
+      summary: 总表（数据统计）
+      tags:
+      - Statistics
+  /v1/statistics/rate/award:
+    get:
+      parameters:
+      - description: 年份
+        in: query
+        name: year
+        type: integer
+      - description: 学校id
+        in: query
+        name: school_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetAwardRateResp'
+              type: object
+      summary: 获取获奖比例
+      tags:
+      - Statistics
+  /v1/statistics/rate/declare:
+    get:
+      parameters:
+      - description: 年份
+        in: query
+        name: year
+        type: integer
+      - description: 学校id
+        in: query
+        name: school_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetDeclareRateResp'
+              type: object
+      summary: 获取申报比例
+      tags:
+      - Statistics
+  /v1/statistics/simple/sum/stats:
+    get:
+      parameters:
+      - description: 年份
+        in: query
+        name: year
+        required: true
+        type: integer
+      - description: 学校id
+        in: query
+        name: school_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetSimpleSumStatsResp'
+              type: object
+      summary: 获取首页下总的统计
+      tags:
+      - Statistics
+  /v1/user/activity/activity/get:
+    get:
+      parameters:
+      - description: 活动id
+        in: query
+        name: activity_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetActivityInfoToUserResp'
+              type: object
+      summary: 获取活动基本信息
+      tags:
+      - UserActivity
+  /v1/user/activity/activity/list:
+    get:
+      parameters:
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: string
+      - description: 页数
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetActivityListToUserResp'
+              type: object
+      summary: 用户获取首页活动列表
+      tags:
+      - UserActivity
+  /v1/user/activity/declare/create:
+    post:
+      parameters:
+      - description: body请求体
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/req.CreateUserActivityDeclareReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 创建用户活动申报
+      tags:
+      - UserActivity
+  /v1/user/activity/declare/list:
+    get:
+      parameters:
+      - description: 活动id
+        in: query
+        name: activity_id
+        required: true
+        type: integer
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetUserActivityDeclareDetailResp'
+              type: object
+      summary: 获取用户活动申报详情
+      tags:
+      - UserActivity
+  /v1/user/activity/declare/record:
+    get:
+      parameters:
+      - description: 年份
+        in: query
+        name: year
+        required: true
+        type: integer
+      - description: 申报的用户id
+        in: query
+        name: declare_user_id
+        required: true
+        type: string
+      - description: 角色类型，1：学校，2：专家，3：教育局，4：老师
+        in: query
+        name: role
+        required: true
+        type: integer
+      - description: 页数
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetUserDeclareRecordListByYearResp'
+              type: object
+      summary: 获取用户的申报记录列表
+      tags:
+      - UserActivity
+  /v1/user/activity/declare/result:
+    get:
+      parameters:
+      - description: 活动id
+        in: query
+        name: activity_id
+        required: true
+        type: integer
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetUserActivityDeclareResultResp'
+              type: object
+      summary: 获取用户活动申报结果
+      tags:
+      - UserActivity
+  /v1/user/activity/declare/result/app:
+    get:
+      parameters:
+      - description: 活动id
+        in: query
+        name: activity_id
+        required: true
+        type: integer
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetUserDeclareResultAppResp'
+              type: object
+      summary: 获取用户申报结果(app端)
+      tags:
+      - UserActivity
+  /v1/user/activity/declare/status/list:
+    get:
+      parameters:
+      - description: 活动id
+        in: query
+        name: activity_id
+        required: true
+        type: integer
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetUserActivityDeclareStatusListResp'
+              type: object
+      summary: 获取用户活动申报状态列表
+      tags:
+      - UserActivity
+  /v1/user/activity/declares/edb:
+    get:
+      parameters:
+      - description: 用户活动id
+        in: query
+        name: user_activity_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetUserDeclaresToEdbResp'
+              type: object
+      summary: 获取用户的活动申报项目（教育局）
+      tags:
+      - UserActivity
+  /v1/user/activity/history/declare/result:
+    get:
+      parameters:
+      - description: 申报的用户id
+        in: query
+        name: declare_user_id
+        required: true
+        type: string
+      - description: 页数
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetUserHistoryDeclareResultListResp'
+              type: object
+      summary: 获取用户的历史申报结果列表
+      tags:
+      - UserActivity
+  /v1/user/activity/indicator/declare/detail:
+    get:
+      parameters:
+      - description: 用户活动申报下单个项目id
+        in: query
+        name: user_activity_indicator_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetUserActivityIndicatorResp'
+              type: object
+      summary: 获取用户单个申报的详情
+      tags:
+      - UserActivity
+  /v1/user/activity/indicator/delete:
+    delete:
+      parameters:
+      - description: 用户活动申报下单个项目id
+        in: query
+        name: user_activity_indicator_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 撤销用户活动单个项目
+      tags:
+      - UserActivity
+  /v1/user/activity/indicator/update:
+    put:
+      parameters:
+      - description: body请求体
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/req.UpdateUserActivityIndicatorReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 用户活动申报单个项目修改
+      tags:
+      - UserActivity
+  /v1/user/cancel/expert/auth:
+    delete:
+      parameters:
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 取消专家授权
+      tags:
+      - User
+  /v1/user/get/expert/auth/list:
+    get:
+      parameters:
+      - description: 用户名称
+        in: query
+        name: user_name
+        type: string
+      - description: 1：男，2：女
+        in: query
+        name: user_sex
+        type: integer
+      - description: 身份证号
+        in: query
+        name: identity_card
+        type: string
+      - description: 手机号
+        in: query
+        name: phone
+        type: string
+      - description: 二级指标ids，, 隔开
+        in: query
+        name: two_indicator_ids
+        type: string
+      - description: 专家是否授权 0：全部 1：未授权 2：已授权
+        in: query
+        name: export_auth
+        type: integer
+      - description: 授权日期，格式2006-01-02
+        in: query
+        name: auth_day
+        type: string
+      - description: 页数
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetExpertAuthListByWhereResp'
+              type: object
+      summary: 获取专家角色列表
+      tags:
+      - User
+  /v1/user/get/info:
+    get:
+      parameters:
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetUserInfoResp'
+              type: object
+      summary: 获取用户信息
+      tags:
+      - User
+  /v1/user/get/role/list:
+    get:
+      parameters:
+      - description: 用户名称
+        in: query
+        name: user_name
+        type: string
+      - description: 1：男，2：女
+        in: query
+        name: user_sex
+        type: integer
+      - description: 身份证号
+        in: query
+        name: identity_card
+        type: string
+      - description: 手机号
+        in: query
+        name: phone
+        type: string
+      - description: 学校id
+        in: query
+        name: school_id
+        type: string
+      - description: 学校名称
+        in: query
+        name: school_name
+        type: string
+      - description: 0：全部，1：学校，2：专家，3：教育局，5：超级管理员
+        in: query
+        name: role
+        type: integer
+      - description: 页数
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetUserListByWhereResp'
+              type: object
+      summary: 获取已设置角色的用户列表
+      tags:
+      - User
+  /v1/user/list/by/name:
+    get:
+      parameters:
+      - description: 用户名称
+        in: query
+        name: user_name
+        required: true
+        type: string
+      - description: 页数
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页大小
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetUsersByNameResp'
+              type: object
+      summary: 通过用户名称模糊匹配获取用户列表
+      tags:
+      - User
+  /v1/user/save/info:
+    post:
+      parameters:
+      - description: 用户id
+        in: formData
+        name: user_id
+        required: true
+        type: string
+      - description: 用户名称
+        in: formData
+        name: user_name
+        required: true
+        type: string
+      - description: 1：男，2：女
+        in: formData
+        name: user_sex
+        required: true
+        type: integer
+      - description: 出生日期
+        in: formData
+        name: birthday
+        required: true
+        type: string
+      - description: 身份证号
+        in: formData
+        name: identity_card
+        required: true
+        type: string
+      - description: 手机号
+        in: formData
+        name: phone
+        required: true
+        type: string
+      - description: 头像
+        in: formData
+        name: avatar
+        required: true
+        type: string
+      - description: 科目code
+        in: formData
+        name: subject_code
+        required: true
+        type: string
+      - description: 学校id
+        in: formData
+        name: school_id
+        required: true
+        type: string
+      - description: 学校名称
+        in: formData
+        name: school_name
+        required: true
+        type: string
+      - description: 1:幼教、2:小学、3:初中、4:高中、5:职校、6:教研
+        in: formData
+        name: declare_type
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 保存当前用户信息
+      tags:
+      - User
+  /v1/user/set/expert/auth:
+    post:
+      parameters:
+      - description: body请求体
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/req.SetExpertAuthReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 给专家授权指标项
+      tags:
+      - User
+  /v1/user/set/role:
+    post:
+      parameters:
+      - description: body请求体
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/req.SetRoleToUserReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resp.Response'
+      summary: 设置用户角色
+      tags:
+      - User
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

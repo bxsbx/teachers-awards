@@ -1,0 +1,21 @@
+{{if .IsServiceFile}}package services
+
+import (
+	"context"
+	"{{.ProjectName}}/model/req"
+    "{{.ProjectName}}/model/resp"
+)
+
+type {{.GroupName}}Service struct {
+	appCtx context.Context
+}
+
+func New{{.GroupName}}Service(appCtx context.Context) *{{.GroupName}}Service {
+	return &{{.GroupName}}Service{appCtx: appCtx}
+}
+{{end}}
+
+func (s *{{.GroupName}}Service) {{.FunName}}({{if .ReqModel}}params *req.{{.ReqModel}}{{end}}) ({{if .RespModel}}data *resp.{{.RespModel}},{{end}}err error) {
+    {{if .RespModel}} data = &resp.{{.RespModel}}{}{{end}}
+	return
+}

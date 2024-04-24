@@ -1,0 +1,16 @@
+{{if .IsRouterFile}}package router
+
+import (
+	"github.com/gin-gonic/gin"
+	"{{.ProjectName}}/controllers"
+)
+
+func {{.GroupName}}Router(group *gin.RouterGroup) {
+	router := group.Group("")
+	api := &controllers.{{.GroupName}}Controller{}
+
+	//{{.Swagger.Summary}}
+	router.{{.Method}}("{{.Router}}", api.{{.FunName}})
+	// router general tag
+}{{else}}    //{{.Swagger.Summary}}
+    router.{{.Method}}("{{.Router}}", api.{{.FunName}}){{end}}

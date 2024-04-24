@@ -1,0 +1,42 @@
+format: ini
+itemFormat: tree
+configs:
+  teachers-awards:
+    - domain
+    - dbHost
+    - dbUserName
+    - dbPassword
+    - dbName
+    - dbMaxOpenConn
+    - dbMaxIdleConn
+    - traceServerName
+    - traceOpen
+    - redisHost
+    - redisPassword
+    - redisPoolSize
+    - dbType
+  trace:
+    - domain
+  dreamEbagQiniu:
+    - AccessKey
+    - SecretKey
+    - bucket
+    - domain
+  accountCenter:
+    - apiDomainV2
+    - clientIdV2
+    - clientSecretV2
+    - pubApiDomain
+    - clientId
+    - clientSecret
+  dreamEbagLogin:
+    - domain-local
+    - apiToken
+project:
+  name: teachers-awards
+  description: '名师评优api'
+  id: 1184
+envBranch:
+  dev: dev
+  test: test
+  prod: main

@@ -1,0 +1,1 @@
+update "teachers_awards"."user_info" set role = 31 WHERE "user_id" = '3323810480475655'
