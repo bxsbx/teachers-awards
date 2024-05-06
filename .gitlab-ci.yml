@@ -1,24 +1,100 @@
-image: golang:1.20
+image: docker:git
 
 stages:
   - build
+  - deploy
+  - config
 
-build_master:
+
+variables:
+  TEST_NAMESPACE: ebag-test
+  TEST_DEPLOYMENT: teachers-awards
+  TEST_CONTTAINER: teachers-awards
+  TEST_CONFIG_ENV: test
+  PROD_NAMESPACE: ebag-prod
+  PROD_DEPLOYMENT: teachers-awards
+  PROD_CONTTAINER: teachers-awards
+  PROD_CONFIG_ENV: prod
+  APP_PORT: 7850
+
+
+build-test:
   stage: build
   script:
-    - mkdir -p $GOPATH/src/$CI_PROJECT_NAME
-    - cp -R $CI_PROJECT_DIR/. $GOPATH/src/$CI_PROJECT_NAME/
-    - cd $GOPATH/src/$CI_PROJECT_NAME
-    - go build -o $CI_PROJECT_NAME main.go
-    - printf "\nenv:" >> .config.yml
-    - printf " prod" >> .config.yml
-    - curl "${CONFIG_SERVER}" -fd "`cat .config.yml`" > conf/dev/app.conf
-    - mv $GOPATH/src/$CI_PROJECT_NAME/$CI_PROJECT_NAME $CI_PROJECT_DIR/$CI_PROJECT_NAME
-    - mv $GOPATH/src/$CI_PROJECT_NAME/conf/dev/app.conf $CI_PROJECT_DIR/conf/dev/app.conf
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker login -u $ALI_REGISTRY_USER -p $ALI_REGISTRY_PASSWORD $ALI_REGISTRY_HOST
+    - docker build --build-arg APP_ROOT=/go/src/${CI_PROJECT_NAME}
+      --build-arg EXPOSE_PORT=${APP_PORT}
+      --build-arg EXPOSE_PORT1=${APP_PORT1}
+      --build-arg DREAM_ENV=${TEST_CONFIG_ENV}
+      --build-arg CONFIG_ENV=${TEST_CONFIG_ENV} 
+      --build-arg APP_NAME=${CI_PROJECT_NAME}
+      --build-arg TAG_NAME=test
+      --build-arg CONFIG_SERVER=${CONFIG_SERVER}
+      --build-arg CI_PROJECT_ID=${CI_PROJECT_ID}
+      --build-arg CI_PROJECT_TITLE=${CI_PROJECT_TITLE}
+      --build-arg CI_PROJECT_NAME=${CI_PROJECT_NAME}
+      -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHA -t $CI_REGISTRY_IMAGE:latest -f docker/Dockerfile .
+    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE:latest
+  only:
+    - test
+
+deploy_test:
+  stage: deploy
+  variables:
+    IMAGE_NAME: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHA
+  image: registry.gitlab.dreamdev.cn/docker/build/kubectl:v1.14.1
+  before_script:
+    - mkdir -p ~/.kube
+    - echo "$TEST_KUBERNETES_CONFIG" > ~/.kube/config
+    - echo "$TEST_KUBERNETES_CA" > ~/.kube/ca.crt
+  script:
+    - kubectl -n $TEST_NAMESPACE set image deployment/$TEST_DEPLOYMENT $TEST_CONTTAINER=$IMAGE_NAME
+  only:
+    - test
+
+build_prod:
+  stage: build
+  variables:
+    IMAGE_NAME: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_TAG
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker login -u $ALI_REGISTRY_USER -p $ALI_REGISTRY_PASSWORD $ALI_REGISTRY_HOST
+  script:
+    - echo `date "+%Y%m%d%H%M%S"` > ./datetime
+    - docker build --build-arg APP_ROOT=/go/src/${CI_PROJECT_NAME}
+      --build-arg EXPOSE_PORT=${APP_PORT}
+      --build-arg EXPOSE_PORT1=${APP_PORT1}
+      --build-arg DREAM_ENV=${PROD_CONFIG_ENV}
+      --build-arg APP_NAME=${CI_PROJECT_NAME}
+      --build-arg TAG_NAME=${CI_COMMIT_TAG}
+      --build-arg CONFIG_ENV=${PROD_CONFIG_ENV} 
+      --build-arg CONFIG_SERVER=${CONFIG_SERVER}
+      --build-arg CI_PROJECT_ID=${CI_PROJECT_ID}
+      --build-arg CI_PROJECT_TITLE=${CI_PROJECT_TITLE}
+      --build-arg CI_PROJECT_NAME=${CI_PROJECT_NAME}
+      -t ${IMAGE_NAME}_`cat ./datetime` -f docker/Dockerfile .
+    - docker push ${IMAGE_NAME}_`cat ./datetime`
   artifacts:
     expire_in: 1 week
     paths:
-      - $CI_PROJECT_NAME
-      - conf
+      - datetime
   only:
-    - local
+    - tags
+
+deploy_prod:
+  stage: deploy
+  variables:
+    IMAGE_NAME: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_TAG
+  image: registry.gitlab.dreamdev.cn/docker/build/kubectl:v1.14.1
+  before_script:
+    - mkdir -p ~/.kube
+    - echo "$PROD_KUBERNETES_CONFIG" > ~/.kube/config
+    - echo "$PROD_KUBERNETES_CA" > ~/.kube/ca.crt
+  script:
+    - kubectl -n $PROD_NAMESPACE set image deployment/$PROD_DEPLOYMENT $PROD_CONTTAINER=${IMAGE_NAME}_`cat ./datetime`
+  only:
+    - tags
+  when: manual
+
