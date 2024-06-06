@@ -24,7 +24,7 @@ const (
 //	@param	path		string	"请求的接口路由path"
 //	@param	method		string	"请求method，Get/Post等"
 //	@param	validTime	int		"签名有效期（秒）"
-//	@return	string 																																																								 "最终生成的认证字符串"
+//	@return	string 																																																																				 "最终生成的认证字符串"
 func GetToken(appKey, appSecret, path, method string, header map[string]string, validTime int) string {
 	canonicalRequest := GenCanonicalRequest(Request{
 		Method: method,
@@ -113,7 +113,7 @@ func ToCanonicalQueryString(params map[string]string) string {
 // ToCanonicalHeaderString 对请求中的Header进行选择性编码
 //
 //	@param	headerMap	map	"选择的Header组成的map"
-//	@return	string 																													"编码结果"
+//	@return	string 																																			"编码结果"
 func ToCanonicalHeaderString(headerMap map[string]string) string {
 	headers := make([]string, 0, len(headerMap))
 	for key, value := range headerMap {
@@ -143,7 +143,7 @@ func GenCanonicalRequest(req Request) string {
 //
 //	@param	accessKeyId				string	"访问密钥ID"
 //	@param	expirationPeriodInSecs	int		"签名有效期（秒）"
-//	@return	string 																																																																																																																																												"前缀字符串"
+//	@return	string 																																																																																																																																																																										"前缀字符串"
 func GenAuthStringPrefix(accessKeyId string, expirationPeriodInSecs int) string {
 	ts := util.NowTime().UTC().Format(time.RFC3339)
 	authStringPrefix := fmt.Sprintf("readboy-edu-middle-v2/%s/%s/%d", accessKeyId, ts, expirationPeriodInSecs)
@@ -155,7 +155,7 @@ func GenAuthStringPrefix(accessKeyId string, expirationPeriodInSecs int) string 
 //	@param	secretAccessKey		string	"秘密访问密钥"
 //	@param	authStringPrefix	string	"前缀字符串"
 //	@param	canonicalRequest	string	"规范化请求"
-//	@return	string 																																																																																																																"签名摘要"
+//	@return	string 																																																																																																																																								"签名摘要"
 func GenSignature(secretAccessKey, authStringPrefix, canonicalRequest string) string {
 	h1 := hmac.New(sha256.New, []byte(secretAccessKey))
 	h1.Write([]byte(authStringPrefix))

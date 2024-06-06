@@ -98,3 +98,29 @@ deploy_prod:
     - tags
   when: manual
 
+#local
+#image: golang:1.20
+#
+#stages:
+#  - build
+#
+#build_master:
+#  stage: build
+#  script:
+#    - mkdir -p $GOPATH/src/$CI_PROJECT_NAME
+#    - cp -R $CI_PROJECT_DIR/. $GOPATH/src/$CI_PROJECT_NAME/ && cd $GOPATH/src/$CI_PROJECT_NAME
+#    - go build -ldflags "-linkmode external -extldflags -static" -a -tags netgo -installsuffix netgo -o $CI_PROJECT_DIR/$CI_PROJECT_NAME main.go
+#    - cd $CI_PROJECT_DIR && echo $(date "+%s") > ./timestamp && echo ${CI_COMMIT_TAG} | cut -d '-' -f 1 > ./area
+#    - mv ./conf/dev/dm.conf ./conf/dev/app.conf
+#    - tar -zcvf ${CI_PROJECT_NAME}_$(cat ./timestamp).tar.gz conf/ $CI_PROJECT_NAME
+#    - split -b 1000k ${CI_PROJECT_NAME}_$(cat ./timestamp).tar.gz ${CI_PROJECT_NAME}_$(cat ./timestamp) && rm ${CI_PROJECT_NAME}_`cat ./timestamp`.tar.gz
+#    - for file in ${CI_PROJECT_NAME}_$(cat ./timestamp)*; do resp=$(curl -s --location "https://api.ebag.readboy.com/local-tool/$(cat ./area)/upload/${CI_PROJECT_NAME}" --form "uploadfile=@\"$file\"" --form "timestamp="$(cat ./timestamp)"" --form "area=$(cat ./area)"); if [ "$resp" != "1" ]; then echo "Upload failed. Response:$resp"; exit 1; fi; done
+#    - curl --location "https://api.ebag.readboy.com/local-tool/$(cat ./area)/install/${CI_PROJECT_NAME}" --form "timestamp="$(cat ./timestamp)"" --form "area=$(cat ./area)" --form "apptype="api""
+#  only:
+#    refs:
+#      - tags
+#  artifacts:
+#    expire_in: 1 week
+#    paths:
+#      - $CI_PROJECT_NAME
+#      - conf

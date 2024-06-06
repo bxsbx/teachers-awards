@@ -18,7 +18,7 @@ definitions:
         type: integer
       final_score:
         description: 最终得分（各项通过的审核）
-        type: integer
+        type: number
       identity_card:
         description: 身份证号
         type: string
@@ -90,7 +90,7 @@ definitions:
         type: integer
       score:
         description: 分值
-        type: integer
+        type: number
       two_indicator_id:
         description: 二级指标id
         type: integer
@@ -108,7 +108,7 @@ definitions:
         type: integer
       final_score:
         description: 最终得分（各项通过的审核）
-        type: integer
+        type: number
       identity_card:
         description: 身份证号
         type: string
@@ -159,7 +159,7 @@ definitions:
         type: string
       score:
         description: 得分
-        type: integer
+        type: number
       user_activity_id:
         description: 0：未通过，1：通过
         type: integer
@@ -279,7 +279,7 @@ definitions:
         type: integer
       score:
         description: 分值
-        type: integer
+        type: number
       two_indicator_id:
         description: 主键id
         type: integer
@@ -303,7 +303,7 @@ definitions:
         type: integer
       final_score:
         description: 最终得分（各项通过的审核）
-        type: integer
+        type: number
       identity_card:
         description: 身份证号
         type: string
@@ -351,7 +351,7 @@ definitions:
         type: string
       final_score:
         description: 最终得分（各项通过的审核）
-        type: integer
+        type: number
       prize:
         description: 奖金
         type: integer
@@ -709,7 +709,7 @@ definitions:
         type: string
       score:
         description: 分值
-        type: integer
+        type: number
       two_indicator_id:
         description: 二级指标id
         type: integer
@@ -812,7 +812,7 @@ definitions:
         type: integer
       score:
         description: 分值
-        type: integer
+        type: number
       two_indicator_id:
         description: 主键id
         type: integer
@@ -827,7 +827,7 @@ definitions:
         type: string
       score:
         description: 分值
-        type: integer
+        type: number
       status:
         description: 审核状态:1.已提交 ,2.已通过,3.学校未通过,4.专家未通过,5.教育局未通过,6.活动已结束，未审批
         type: integer
@@ -1110,6 +1110,9 @@ definitions:
       end_time:
         description: 结束时间
         type: string
+      has_declare:
+        description: 是否有申报过
+        type: boolean
       review_num:
         description: 当前已审核人数
         type: integer
@@ -1286,7 +1289,7 @@ definitions:
         type: integer
       final_score:
         description: 最终得分（各项通过的审核）
-        type: integer
+        type: number
       list:
         items:
           $ref: '#/definitions/resp.ActivityIndicatorInfo'
@@ -1300,6 +1303,9 @@ definitions:
     type: object
   resp.GetUserActivityDeclareStatusListResp:
     properties:
+      activity_status:
+        description: 活动状态，1：待开始，2：进行中，3已结束
+        type: integer
       declare_num:
         description: 总申报项数
         type: integer
@@ -1358,7 +1364,7 @@ definitions:
         type: integer
       score:
         description: 分值
-        type: integer
+        type: number
       status:
         description: 审核状态:1.已提交 ,2.已通过,3.学校未通过,4.专家未通过,5.教育局未通过,6.活动已结束，未审批,
         type: integer
@@ -1400,16 +1406,16 @@ definitions:
         type: string
       edb_score:
         description: 教育局评分
-        type: integer
+        type: number
       expert_no_pass_score:
         description: 专家评分（未通过）
-        type: integer
+        type: number
       expert_pass_score:
         description: 专家评分（通过）
-        type: integer
+        type: number
       final_score:
         description: 最终得分（各项通过的审核）
-        type: integer
+        type: number
       prize:
         description: 奖金
         type: integer
@@ -1421,16 +1427,16 @@ definitions:
         type: integer
       school_score:
         description: 学校评分
-        type: integer
+        type: number
       teacher_score:
         description: 老师自评
-        type: integer
+        type: number
     type: object
   resp.GetUserDeclaresToEdbResp:
     properties:
       final_score:
         description: 最终得分（各项通过的审核）
-        type: integer
+        type: number
       list:
         items:
           $ref: '#/definitions/resp.UserDeclaresToEdb'
@@ -1643,7 +1649,7 @@ definitions:
         type: string
       score:
         description: 分值
-        type: integer
+        type: number
       status:
         description: 审核状态:1.已提交 ,2.已通过,3.学校未通过,4.专家未通过,5.教育局未通过,6.活动已结束，未审批,
         type: integer
@@ -1780,7 +1786,7 @@ definitions:
         type: string
       score:
         description: 分值
-        type: integer
+        type: number
       two_indicator_id:
         description: 主键id
         type: integer
@@ -1860,7 +1866,7 @@ definitions:
         type: string
       score:
         description: 分值
-        type: integer
+        type: number
       status:
         description: 审核状态:1.待审核 ,2.已通过,3.学校未通过,5.未通过（教育局）,
         type: integer
@@ -1901,7 +1907,7 @@ definitions:
         type: integer
       score:
         description: 分值
-        type: integer
+        type: number
       two_indicator_id:
         description: 二级指标id
         type: integer
@@ -2135,6 +2141,12 @@ paths:
       - Activity
   /v1/activity/latest:
     get:
+      parameters:
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
@@ -2252,7 +2264,7 @@ paths:
       - description: 最终得分（各项通过的审核）
         in: query
         name: final_score
-        type: integer
+        type: number
       - description: 页数
         in: query
         name: page
@@ -2413,7 +2425,7 @@ paths:
       - description: 最终得分（各项通过的审核）
         in: query
         name: final_score
-        type: integer
+        type: number
       - description: 页数
         in: query
         name: page
@@ -2886,7 +2898,7 @@ paths:
       - description: 最终得分（各项通过的审核）
         in: query
         name: final_score
-        type: integer
+        type: number
       produces:
       - application/json
       responses:
@@ -2980,7 +2992,7 @@ paths:
       - description: 最终得分（各项通过的审核）
         in: query
         name: final_score
-        type: integer
+        type: number
       produces:
       - application/octet-stream
       responses: {}
@@ -3180,7 +3192,7 @@ paths:
       - description: 输入的分值
         in: query
         name: input_score
-        type: integer
+        type: number
       - description: 页数
         in: query
         name: page
@@ -3220,7 +3232,7 @@ paths:
         in: formData
         name: score
         required: true
-        type: integer
+        type: number
       - description: 所属一级指标
         in: formData
         name: one_indicator_id
@@ -3469,6 +3481,11 @@ paths:
         name: user_id
         required: true
         type: string
+      - description: 登录平台，1：手机端 2：web端
+        in: query
+        name: platform
+        required: true
+        type: integer
       - description: 教学研token，600000：中台1.0 公版，6000001：中台2.0 诸暨版
         in: query
         name: jxy_token
@@ -3487,6 +3504,39 @@ paths:
                   $ref: '#/definitions/resp.GetTokenAndUserInfoResp'
               type: object
       summary: 获取token和用户的基本信息
+      tags:
+      - Public
+  /v1/public/get/user/info/by/code:
+    get:
+      parameters:
+      - description: 数据来源，600000：中台1.0 公版，6000001：中台2.0 诸暨版，6000002：中台2.0 新昌
+        in: query
+        name: from
+        required: true
+        type: string
+      - description: 验证码
+        in: query
+        name: code
+        required: true
+        type: string
+      - description: 跳转链接
+        in: query
+        name: redirect_url
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resp.GetTokenAndUserInfoResp'
+              type: object
+      summary: 通过code获取用户信息和token
       tags:
       - Public
   /v1/statistics/activity/result:

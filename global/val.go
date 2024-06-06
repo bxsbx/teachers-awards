@@ -9,7 +9,7 @@ import (
 )
 
 type UserInfo struct {
-	From      string `json:"from"` //用户数据来源，600000：中台1.0，6000001：中台2.0
+	From      string `json:"from"` //用户数据来源，600000：公版(中台1.0)，6000001：诸暨(中台2.0)，6000002：新昌(中台2.0)
 	UserId    string `json:"user_id"`
 	UserName  string `json:"user_name"`
 	UserRoles []int  `json:"user_roles"`

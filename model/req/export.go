@@ -15,17 +15,17 @@ type ExportReviewListReq struct {
 }
 
 type ExportHistoryActivityListReq struct {
-	UserName     string `form:"user_name"`     //用户姓名
-	UserSex      int    `form:"user_sex"`      //1：男，2：女
-	SubjectCode  string `form:"subject_code"`  //科目code
-	SchoolId     string `form:"school_id"`     //学校id
-	SchoolName   string `form:"school_name"`   //学校名称
-	Year         int    `form:"year"`          //年份
-	DeclareType  int    `form:"declare_type"`  //申报类型
-	IdentityCard string `form:"identity_card"` //身份证号
-	RankPrize    *int   `form:"rank_prize"`    //0：无，1：一等奖，2：二等奖，3：三等奖
-	Rank         int    `form:"rank"`          //排名
-	FinalScore   int    `form:"final_score"`   //最终得分（各项通过的审核）
+	UserName     string  `form:"user_name"`     //用户姓名
+	UserSex      int     `form:"user_sex"`      //1：男，2：女
+	SubjectCode  string  `form:"subject_code"`  //科目code
+	SchoolId     string  `form:"school_id"`     //学校id
+	SchoolName   string  `form:"school_name"`   //学校名称
+	Year         int     `form:"year"`          //年份
+	DeclareType  int     `form:"declare_type"`  //申报类型
+	IdentityCard string  `form:"identity_card"` //身份证号
+	RankPrize    *int    `form:"rank_prize"`    //0：无，1：一等奖，2：二等奖，3：三等奖
+	Rank         int     `form:"rank"`          //排名
+	FinalScore   float64 `form:"final_score"`   //最终得分（各项通过的审核）
 }
 
 type ExportUserDeclareRecordListByYearReq struct {
@@ -44,14 +44,14 @@ type ExportEdbReviewListReq struct {
 }
 
 type ExportAwardsSetListReq struct {
-	ActivityId   int    `form:"activity_id"  binding:"required"` //活动id
-	UserName     string `form:"user_name"`                       //用户姓名
-	UserSex      int    `form:"user_sex"`                        //1：男，2：女
-	SubjectCode  string `form:"subject_code"`                    //科目code
-	SchoolId     string `form:"school_id"`                       //学校id
-	SchoolName   string `form:"school_name"`                     //学校名称
-	DeclareType  int    `form:"declare_type"`                    //申报类型
-	IdentityCard string `form:"identity_card"`                   //身份证号
-	RankPrize    *int   `form:"rank_prize"`                      //名次，0：无，1：一等奖，2：二等奖，3：三等奖
-	FinalScore   int    `form:"final_score"`                     //最终得分（各项通过的审核）
+	ActivityId   int     `form:"activity_id"  binding:"required"` //活动id
+	UserName     string  `form:"user_name"`                       //用户姓名
+	UserSex      int     `form:"user_sex"`                        //1：男，2：女
+	SubjectCode  string  `form:"subject_code"`                    //科目code
+	SchoolId     string  `form:"school_id"`                       //学校id
+	SchoolName   string  `form:"school_name"`                     //学校名称
+	DeclareType  int     `form:"declare_type"`                    //申报类型
+	IdentityCard string  `form:"identity_card"`                   //身份证号
+	RankPrize    *int    `form:"rank_prize"`                      //名次，0：无，1：一等奖，2：二等奖，3：三等奖
+	FinalScore   float64 `form:"final_score"`                     //最终得分（各项通过的审核）
 }

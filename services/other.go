@@ -34,7 +34,7 @@ func (s *OtherService) GetUploadToken(userId string, fileName string) (data *res
 		//InsertOnly: 1,                                                                    // 仅能以新增模式上传文件
 		ReturnBody: `{"F_url":"` + qiNiuConfig.Domain + `/` + storagePath + `"}`, // 自定义七牛云最终返回給上传端的数据
 		SaveKey:    storagePath,                                                  // 自定义资源名
-		MimeLimit:  "image/jpeg;image/png;application/pdf",                       //限制上传类型
+		MimeLimit:  "image/*;application/*",                                      //限制上传类型
 		FsizeLimit: 10 * 1024 * 1024,                                             //限制上传大小
 	}
 	mac := qbox.NewMac(qiNiuConfig.AccessKey, qiNiuConfig.SecretKey) //*accessKey和secretKey*

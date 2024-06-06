@@ -109,7 +109,7 @@ func (s *UserActivityService) CreateUserActivityDeclare(params *req.CreateUserAc
 		go func() {
 			otherService := NewOtherService(s.appCtx)
 			for _, v := range list {
-				global.RecordNotNilError(otherService.OperationUaiRecord(v.UserActivityIndicatorId, 1, 4))
+				global.RecordNotNilError(s.appCtx, otherService.OperationUaiRecord(v.UserActivityIndicatorId, 1, 4))
 			}
 		}()
 	}
@@ -145,6 +145,21 @@ func (s *UserActivityService) GetUserActivityDeclareDetail(activityId int, userI
 
 func (s *UserActivityService) GetUserActivityDeclareStatusList(activityId int, userId string) (data *resp.GetUserActivityDeclareStatusListResp, err error) {
 	data = &resp.GetUserActivityDeclareStatusListResp{}
+	activityDao := dao.NewActivityDao(s.appCtx)
+	activity := dao.Activity{}
+	err = activityDao.First(dao.Activity{ActivityId: activityId}, &activity)
+	if err != nil {
+		return
+	}
+	nowTime := util.NowTime()
+	if nowTime.After(*activity.EndTime) {
+		data.ActivityStatus = global.ActivityEnd
+	} else if !nowTime.Before(*activity.StartTime) {
+		data.ActivityStatus = global.ActivityOngoing
+	} else {
+		data.ActivityStatus = global.ActivityWaitStart
+	}
+
 	userActivityDao := dao.NewUserActivityDao(s.appCtx)
 	userActivity := userActivityDao.GetOnlyUserActivity(activityId, userId)
 	if userActivity.UserActivityId == 0 {
@@ -301,7 +316,7 @@ func (s *UserActivityService) UpdateUserActivityIndicator(params *req.UpdateUser
 	})
 	//操作记录
 	if err == nil {
-		go global.RecordNotNilError(NewOtherService(s.appCtx).OperationUaiRecord(params.UserActivityIndicatorId, 2, 4))
+		go global.RecordNotNilError(s.appCtx, NewOtherService(s.appCtx).OperationUaiRecord(params.UserActivityIndicatorId, 2, 4))
 	}
 	return
 }
@@ -323,7 +338,7 @@ func (s *UserActivityService) DeleteUserActivityIndicator(userActivityIndicatorI
 	})
 	//操作记录
 	if err == nil {
-		go global.RecordNotNilError(NewOtherService(s.appCtx).OperationUaiRecord(userActivityIndicatorId, 3, 4))
+		go global.RecordNotNilError(s.appCtx, NewOtherService(s.appCtx).OperationUaiRecord(userActivityIndicatorId, 3, 4))
 	}
 	return
 }
@@ -333,20 +348,24 @@ func (s *UserActivityService) GetUserActivityDeclareResult(activityId int, userI
 	userActivityDao := dao.NewUserActivityDao(s.appCtx)
 	var userActivity dao.UserActivity
 	err = userActivityDao.First(dao.UserActivity{ActivityId: activityId, UserId: userId}, &userActivity)
+	if err != nil {
+		return
+	}
 	data.Prize = userActivity.Prize
 	data.RankPrize = *userActivity.RankPrize
 	data.FinalScore = userActivity.FinalScore
 
 	userActivityIndicatorDao := dao.NewUserActivityIndicatorDao(s.appCtx)
 	var userActivityIndicatorList []dao.UserActivityIndicator
-	err = userActivityIndicatorDao.Find(dao.UserActivityIndicator{UserActivityId: userActivity.UserActivityId, Status: 2}, &userActivityIndicatorList, "two_indicator_id")
+	err = userActivityIndicatorDao.Find(dao.UserActivityIndicator{UserActivityId: userActivity.UserActivityId, Status: global.ReviewStatusPass}, &userActivityIndicatorList, "user_activity_indicator_id,two_indicator_id")
 	if err != nil {
 		return
 	}
+	twoIdUserAIIdMap := make(map[int]int64)
 	var twoIds []int
 	for _, v := range userActivityIndicatorList {
 		twoIds = append(twoIds, v.TwoIndicatorId)
-		data.DeclareNum++
+		twoIdUserAIIdMap[v.TwoIndicatorId] = v.UserActivityIndicatorId
 	}
 	activityTwoIndicatorDao := dao.NewActivityTwoIndicatorDao(s.appCtx)
 	twoIndicatorMap, err := activityTwoIndicatorDao.GetActivityTwoIndicatorMap(activityId, twoIds)
@@ -358,7 +377,19 @@ func (s *UserActivityService) GetUserActivityDeclareResult(activityId int, userI
 	if err != nil {
 		return
 	}
+	maxOneToTwo := make(map[int]dao.ActivityTwoIndicator)
 	for _, v := range twoIndicatorMap {
+		if two, ok := maxOneToTwo[v.OneIndicatorId]; ok {
+			if v.Score > two.Score {
+				maxOneToTwo[v.OneIndicatorId] = v
+			} else if v.Score == two.Score && twoIdUserAIIdMap[v.TwoIndicatorId] > twoIdUserAIIdMap[two.TwoIndicatorId] {
+				maxOneToTwo[v.OneIndicatorId] = v
+			}
+		} else {
+			maxOneToTwo[v.OneIndicatorId] = v
+		}
+	}
+	for _, v := range maxOneToTwo {
 		one := activityOneIndicatorMap[v.OneIndicatorId]
 		data.List = append(data.List, resp.ActivityIndicatorInfo{
 			OneIndicatorId:   one.OneIndicatorId,
@@ -371,6 +402,7 @@ func (s *UserActivityService) GetUserActivityDeclareResult(activityId int, userI
 	sort.Slice(data.List, func(i, j int) bool {
 		return data.List[i].OneIndicatorId < data.List[j].OneIndicatorId || (data.List[i].OneIndicatorId == data.List[j].OneIndicatorId && data.List[i].TwoIndicatorId < data.List[j].TwoIndicatorId)
 	})
+	data.DeclareNum = len(data.List)
 	return
 }
 

@@ -29,7 +29,7 @@ func JWTAuth() gin.HandlerFunc {
 		ctx = global.SetUserInfo(ctx, userInfo)
 		global.SetContext(c, ctx)
 
-		//单点登录结合redis，无需使用注释
+		//互踢登录结合redis，无需使用注释（白名单）
 		//tokenKey := global.JwtKey + userInfo.UserId
 		//redisToken, err := global.RedisClient.Get(ctx, tokenKey).Result()
 		//if err != nil {

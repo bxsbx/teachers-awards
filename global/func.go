@@ -16,6 +16,7 @@ import (
 const (
 	ctxKey      = "context"
 	userInfoKey = "UserInfo"
+	reqIdKey    = "req_id"
 )
 
 func GetContext(c *gin.Context) context.Context {
@@ -48,15 +49,24 @@ func GetUserInfoFromClaims(claims *jwt.CustomClaims) *UserInfo {
 	return &userInfo
 }
 
+func GetReqId(ctx context.Context) string {
+	if reqId, ok := ctx.Value(reqIdKey).(string); ok {
+		return reqId
+	}
+	return ""
+}
+
 // 记录非空错误
-func RecordNotNilError(err error) {
+func RecordNotNilError(ctx context.Context, err error) {
 	if err != nil {
-		PrintRecordError(err, errorz.GetErrorCallerList(err))
+		PrintError(ctx, errorz.GetErrorCallerList(err))
 	}
 }
 
-func PrintSendRequestError(url, method string, header, body, response interface{}, err error) {
+func PrintSendRequestError(ctx context.Context, url, method string, header, body, response interface{}, err error) {
+	reqId := GetReqId(ctx)
 	fields := []zap.Field{
+		zap.String("reqId", reqId),
 		zap.String("url", url),
 		zap.String("method", method),
 		zap.Any("header", header),
@@ -67,10 +77,24 @@ func PrintSendRequestError(url, method string, header, body, response interface{
 	Logger.Error("SendRequest", fields...)
 }
 
-func PrintRecordError(err error, any interface{}) {
+func PrintSendRequestInfo(ctx context.Context, url, method string, header, body, response interface{}) {
+	reqId := GetReqId(ctx)
 	fields := []zap.Field{
-		zap.String("error", err.Error()),
-		zap.Any("detail", any),
+		zap.String("reqId", reqId),
+		zap.String("url", url),
+		zap.String("method", method),
+		zap.Any("header", header),
+		zap.Any("body", body),
+		zap.Any("response", response),
+	}
+	Logger.Info("SendRequest", fields...)
+}
+
+func PrintError(ctx context.Context, any interface{}) {
+	reqId := GetReqId(ctx)
+	fields := []zap.Field{
+		zap.String("reqId", reqId),
+		zap.Any("errorInfo", any),
 	}
 	Logger.Error("Record Error", fields...)
 }

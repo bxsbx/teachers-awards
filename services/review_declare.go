@@ -85,6 +85,53 @@ func (s *ReviewDeclareService) GetReviewList(params *req.GetReviewListReq) (data
 	return
 }
 
+func (s *ReviewDeclareService) GetTwoInfo(userActivityId int64, twoId int) (twoInfo dao.ActivityTwoIndicator, err error) {
+	var userActivity dao.UserActivity
+	userActivityDao := dao.NewUserActivityDao(s.appCtx)
+	err = userActivityDao.First(dao.UserActivity{UserActivityId: userActivityId}, &userActivity)
+	if err != nil {
+		return
+	}
+
+	activityTwoIndicatorDao := dao.NewActivityTwoIndicatorDao(s.appCtx)
+	err = activityTwoIndicatorDao.First(dao.ActivityTwoIndicator{ActivityId: userActivity.ActivityId, TwoIndicatorId: twoId}, &twoInfo)
+	if err != nil {
+		return
+	}
+	return
+}
+
+func (s *ReviewDeclareService) GetMaxScore(activityId, oneId, twoId int, userActivityId int64) (curMaxScore, preMaxScore float64, err error) {
+	activityTwoIndicatorDao := dao.NewActivityTwoIndicatorDao(s.appCtx)
+	var twoList []dao.ActivityTwoIndicator
+	err = activityTwoIndicatorDao.Find(dao.ActivityTwoIndicator{ActivityId: activityId, OneIndicatorId: oneId}, &twoList)
+	if err != nil {
+		return
+	}
+
+	var twoIds []int
+	userActivityIndicatorDao := dao.NewUserActivityIndicatorDao(s.appCtx)
+	err = userActivityIndicatorDao.Pluck(dao.UserActivityIndicator{UserActivityId: userActivityId, Status: global.ReviewStatusPass}, &twoIds, "TwoIndicatorId")
+	if err != nil {
+		return
+	}
+	twoMap := util.ListObjToMap(twoIds, func(twoId int) (int, struct{}) {
+		return twoId, struct{}{}
+	})
+	twoMap[twoId] = struct{}{}
+	for _, v := range twoList {
+		if _, ok := twoMap[v.TwoIndicatorId]; ok {
+			if v.Score > curMaxScore {
+				curMaxScore = v.Score
+			}
+			if twoId != v.TwoIndicatorId && v.Score > preMaxScore {
+				preMaxScore = v.Score
+			}
+		}
+	}
+	return
+}
+
 // 由于事务的并发性，且无法通过数据唯一索引来控制数据的唯一准确性，对于同一个UserActivityIndicatorId需要加锁来控制，
 // 否则（比如两个校级角色同时提交就会出现数据问题，因此需要枷锁来控制，尽管出现的可能性很小）
 // 单机服务可以直接使用本地锁，多台服务则可以使用分布式锁
@@ -146,11 +193,11 @@ func (s *ReviewDeclareService) CommitReview(params *req.CommitReviewReq) (err er
 		if err != nil {
 			return err
 		}
-		twoIndicator, err := dao.NewUserActivityDao(s.appCtx).GetIndicatorInfo(userActivityIndicator.UserActivityId, userActivityIndicator.TwoIndicatorId)
+		twoInfo, err := s.GetTwoInfo(userActivityIndicator.UserActivityId, userActivityIndicator.TwoIndicatorId)
 		if err != nil {
 			return err
 		}
-		item.Score = twoIndicator.Score
+		item.Score = twoInfo.Score
 		if item.JudgesType == global.RoleExpert {
 			if *userActivityIndicator.FinishReviewNum == activityInfo.ReviewNum-2 {
 				userActivityIndicatorUpdateMap["review_process"] = userActivityIndicator.ReviewProcess + 1
@@ -171,7 +218,11 @@ func (s *ReviewDeclareService) CommitReview(params *req.CommitReviewReq) (err er
 				userActivityDao := dao.NewUserActivityDaoWithDB(tx, s.appCtx)
 				userActivityUpdateMap := make(map[string]interface{})
 				userActivityUpdateMap["update_time"] = &nowTime
-				userActivityUpdateMap["final_score"] = gorm.Expr("final_score + ?", twoIndicator.Score)
+				curMaxScore, preMaxScore, err := s.GetMaxScore(twoInfo.ActivityId, twoInfo.OneIndicatorId, twoInfo.TwoIndicatorId, userActivityIndicator.UserActivityId)
+				if err != nil {
+					return err
+				}
+				userActivityUpdateMap["final_score"] = gorm.Expr("final_score + ?", curMaxScore-preMaxScore)
 				err = userActivityDao.UpdateByWhere(dao.UserActivity{UserActivityId: userActivityIndicator.UserActivityId}, userActivityUpdateMap)
 				if err != nil {
 					return err
@@ -188,7 +239,7 @@ func (s *ReviewDeclareService) CommitReview(params *req.CommitReviewReq) (err er
 	})
 	//操作记录
 	if err == nil {
-		go global.RecordNotNilError(NewOtherService(s.appCtx).OperationUaiPassRecord(params.UserActivityIndicatorId, params.IsPass, item.JudgesType))
+		go global.RecordNotNilError(s.appCtx, NewOtherService(s.appCtx).OperationUaiPassRecord(params.UserActivityIndicatorId, params.IsPass, item.JudgesType))
 	}
 	return
 }
@@ -316,7 +367,7 @@ func (s *ReviewDeclareService) UpdateTwoIndicatorId(params *req.UpdateTwoIndicat
 	})
 	//操作记录
 	if err == nil {
-		go global.RecordNotNilError(NewOtherService(s.appCtx).UpdateUaiRecord(oldInfo.UserActivityIndicatorId, oldInfo.UserActivityId, oldInfo.TwoIndicatorId, params.TwoIndicatorId))
+		go global.RecordNotNilError(s.appCtx, NewOtherService(s.appCtx).UpdateUaiRecord(oldInfo.UserActivityIndicatorId, oldInfo.UserActivityId, oldInfo.TwoIndicatorId, params.TwoIndicatorId))
 	}
 	return
 }
@@ -399,7 +450,7 @@ func (s *ReviewDeclareService) EdbDeclareToUser(params *req.EdbDeclareToUserReq)
 	})
 	//操作记录
 	if err == nil {
-		go global.RecordNotNilError(NewOtherService(s.appCtx).OperationUaiRecord(userActivityIndicatorId, 2, 3))
+		go global.RecordNotNilError(s.appCtx, NewOtherService(s.appCtx).OperationUaiRecord(userActivityIndicatorId, 2, 3))
 	}
 	return
 }

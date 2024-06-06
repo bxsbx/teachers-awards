@@ -219,6 +219,15 @@ const docTemplate = `{
                     "Activity"
                 ],
                 "summary": "获取最新活动",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "用户id",
+                        "name": "user_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -401,7 +410,7 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "integer",
+                        "type": "number",
                         "description": "最终得分（各项通过的审核）",
                         "name": "final_score",
                         "in": "query"
@@ -651,7 +660,7 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "integer",
+                        "type": "number",
                         "description": "最终得分（各项通过的审核）",
                         "name": "final_score",
                         "in": "query"
@@ -1403,7 +1412,7 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "integer",
+                        "type": "number",
                         "description": "最终得分（各项通过的审核）",
                         "name": "final_score",
                         "in": "query"
@@ -1547,7 +1556,7 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "integer",
+                        "type": "number",
                         "description": "最终得分（各项通过的审核）",
                         "name": "final_score",
                         "in": "query"
@@ -1855,7 +1864,7 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "integer",
+                        "type": "number",
                         "description": "输入的分值",
                         "name": "input_score",
                         "in": "query"
@@ -1919,7 +1928,7 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "integer",
+                        "type": "number",
                         "description": "分值",
                         "name": "score",
                         "in": "formData",
@@ -2337,9 +2346,70 @@ const docTemplate = `{
                         "required": true
                     },
                     {
+                        "type": "integer",
+                        "description": "登录平台，1：手机端 2：web端",
+                        "name": "platform",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
                         "type": "string",
                         "description": "教学研token，600000：中台1.0 公版，6000001：中台2.0 诸暨版",
                         "name": "jxy_token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/resp.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/resp.GetTokenAndUserInfoResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/public/get/user/info/by/code": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Public"
+                ],
+                "summary": "通过code获取用户信息和token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "数据来源，600000：中台1.0 公版，6000001：中台2.0 诸暨版，6000002：中台2.0 新昌",
+                        "name": "from",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "验证码",
+                        "name": "code",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "跳转链接",
+                        "name": "redirect_url",
                         "in": "query",
                         "required": true
                     }
@@ -3855,7 +3925,7 @@ const docTemplate = `{
                 },
                 "final_score": {
                     "description": "最终得分（各项通过的审核）",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "identity_card": {
                     "description": "身份证号",
@@ -3953,7 +4023,7 @@ const docTemplate = `{
                 },
                 "score": {
                     "description": "分值",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "two_indicator_id": {
                     "description": "二级指标id",
@@ -3978,7 +4048,7 @@ const docTemplate = `{
                 },
                 "final_score": {
                     "description": "最终得分（各项通过的审核）",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "identity_card": {
                     "description": "身份证号",
@@ -4047,7 +4117,7 @@ const docTemplate = `{
                 },
                 "score": {
                     "description": "得分",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "user_activity_id": {
                     "description": "0：未通过，1：通过",
@@ -4213,7 +4283,7 @@ const docTemplate = `{
                 },
                 "score": {
                     "description": "分值",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "two_indicator_id": {
                     "description": "主键id",
@@ -4246,7 +4316,7 @@ const docTemplate = `{
                 },
                 "final_score": {
                     "description": "最终得分（各项通过的审核）",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "identity_card": {
                     "description": "身份证号",
@@ -4311,7 +4381,7 @@ const docTemplate = `{
                 },
                 "final_score": {
                     "description": "最终得分（各项通过的审核）",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "prize": {
                     "description": "奖金",
@@ -4798,7 +4868,7 @@ const docTemplate = `{
                 },
                 "score": {
                     "description": "分值",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "two_indicator_id": {
                     "description": "二级指标id",
@@ -4940,7 +5010,7 @@ const docTemplate = `{
                 },
                 "score": {
                     "description": "分值",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "two_indicator_id": {
                     "description": "主键id",
@@ -4961,7 +5031,7 @@ const docTemplate = `{
                 },
                 "score": {
                     "description": "分值",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "status": {
                     "description": "审核状态:1.已提交 ,2.已通过,3.学校未通过,4.专家未通过,5.教育局未通过,6.活动已结束，未审批",
@@ -5369,6 +5439,10 @@ const docTemplate = `{
                     "description": "结束时间",
                     "type": "string"
                 },
+                "has_declare": {
+                    "description": "是否有申报过",
+                    "type": "boolean"
+                },
                 "review_num": {
                     "description": "当前已审核人数",
                     "type": "integer"
@@ -5629,7 +5703,7 @@ const docTemplate = `{
                 },
                 "final_score": {
                     "description": "最终得分（各项通过的审核）",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "list": {
                     "type": "array",
@@ -5650,6 +5724,10 @@ const docTemplate = `{
         "resp.GetUserActivityDeclareStatusListResp": {
             "type": "object",
             "properties": {
+                "activity_status": {
+                    "description": "活动状态，1：待开始，2：进行中，3已结束",
+                    "type": "integer"
+                },
                 "declare_num": {
                     "description": "总申报项数",
                     "type": "integer"
@@ -5729,7 +5807,7 @@ const docTemplate = `{
                 },
                 "score": {
                     "description": "分值",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "status": {
                     "description": "审核状态:1.已提交 ,2.已通过,3.学校未通过,4.专家未通过,5.教育局未通过,6.活动已结束，未审批,",
@@ -5788,19 +5866,19 @@ const docTemplate = `{
                 },
                 "edb_score": {
                     "description": "教育局评分",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "expert_no_pass_score": {
                     "description": "专家评分（未通过）",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "expert_pass_score": {
                     "description": "专家评分（通过）",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "final_score": {
                     "description": "最终得分（各项通过的审核）",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "prize": {
                     "description": "奖金",
@@ -5816,11 +5894,11 @@ const docTemplate = `{
                 },
                 "school_score": {
                     "description": "学校评分",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "teacher_score": {
                     "description": "老师自评",
-                    "type": "integer"
+                    "type": "number"
                 }
             }
         },
@@ -5829,7 +5907,7 @@ const docTemplate = `{
             "properties": {
                 "final_score": {
                     "description": "最终得分（各项通过的审核）",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "list": {
                     "type": "array",
@@ -6135,7 +6213,7 @@ const docTemplate = `{
                 },
                 "score": {
                     "description": "分值",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "status": {
                     "description": "审核状态:1.已提交 ,2.已通过,3.学校未通过,4.专家未通过,5.教育局未通过,6.活动已结束，未审批,",
@@ -6326,7 +6404,7 @@ const docTemplate = `{
                 },
                 "score": {
                     "description": "分值",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "two_indicator_id": {
                     "description": "主键id",
@@ -6436,7 +6514,7 @@ const docTemplate = `{
                 },
                 "score": {
                     "description": "分值",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "status": {
                     "description": "审核状态:1.待审核 ,2.已通过,3.学校未通过,5.未通过（教育局）,",
@@ -6492,7 +6570,7 @@ const docTemplate = `{
                 },
                 "score": {
                     "description": "分值",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "two_indicator_id": {
                     "description": "二级指标id",

@@ -55,12 +55,12 @@ type TypeDeclareAwardRankNum struct {
 }
 
 type TwoIndicatorInfo struct {
-	ActivityId       int    `json:"activity_id,omitempty" gorm:"column:activity_id"`             //活动id
-	TwoIndicatorId   int    `json:"two_indicator_id" gorm:"column:two_indicator_id;primary_key"` //二级指标id
-	TwoIndicatorName string `json:"two_indicator_name" gorm:"column:two_indicator_name"`         //二级指标名称
-	Score            int    `json:"score" gorm:"column:score"`                                   //分值
-	OneIndicatorId   int    `json:"one_indicator_id" gorm:"column:one_indicator_id"`             //所属一级指标
-	OneIndicatorName string `json:"one_indicator_name" gorm:"column:one_indicator_name"`         //一级指标名称
+	ActivityId       int     `json:"activity_id,omitempty" gorm:"column:activity_id"`             //活动id
+	TwoIndicatorId   int     `json:"two_indicator_id" gorm:"column:two_indicator_id;primary_key"` //二级指标id
+	TwoIndicatorName string  `json:"two_indicator_name" gorm:"column:two_indicator_name"`         //二级指标名称
+	Score            float64 `json:"score" gorm:"column:score"`                                   //分值
+	OneIndicatorId   int     `json:"one_indicator_id" gorm:"column:one_indicator_id"`             //所属一级指标
+	OneIndicatorName string  `json:"one_indicator_name" gorm:"column:one_indicator_name"`         //一级指标名称
 }
 
 type ReviewItem struct {
@@ -98,12 +98,12 @@ type UserDeclareRecord struct {
 }
 
 type UserHistoryDeclareResult struct {
-	ActivityId   int    `json:"activity_id" gorm:"column:activity_id"`     //活动id
-	ActivityName string `json:"activity_name" gorm:"column:activity_name"` //活动名称
-	FinalScore   int    `json:"final_score" gorm:"column:final_score"`     //最终得分（各项通过的审核）
-	Rank         int    `json:"rank" gorm:"column:rank"`                   //排名
-	RankPrize    int    `json:"rank_prize" gorm:"column:rank_prize"`       //0：无，1：一等奖，2：二等奖，3：三等奖
-	Prize        int    `json:"prize" gorm:"column:prize"`                 //奖金
+	ActivityId   int     `json:"activity_id" gorm:"column:activity_id"`     //活动id
+	ActivityName string  `json:"activity_name" gorm:"column:activity_name"` //活动名称
+	FinalScore   float64 `json:"final_score" gorm:"column:final_score"`     //最终得分（各项通过的审核）
+	Rank         int     `json:"rank" gorm:"column:rank"`                   //排名
+	RankPrize    int     `json:"rank_prize" gorm:"column:rank_prize"`       //0：无，1：一等奖，2：二等奖，3：三等奖
+	Prize        int     `json:"prize" gorm:"column:prize"`                 //奖金
 }
 
 type ResultGroupByDeclareType struct {
@@ -123,7 +123,7 @@ type EdbReviewItem struct {
 	SchoolName     string     `json:"school_name" gorm:"column:school_name"`           //学校名称
 	DeclareType    int        `json:"declare_type" gorm:"column:declare_type"`         //1:幼教、2:小学、3:初中、4:高中、5:职校、6:教研
 	IdentityCard   string     `json:"identity_card" gorm:"column:identity_card"`       //身份证号
-	FinalScore     int        `json:"final_score" gorm:"column:final_score"`           //最终得分（各项通过的审核）
+	FinalScore     float64    `json:"final_score" gorm:"column:final_score"`           //最终得分（各项通过的审核）
 	Status         int        `json:"status" gorm:"column:status"`                     //审核状态:1:待审核，2：已审核
 	CreateTime     *time.Time `json:"create_time" gorm:"column:create_time"`           //创建时间
 }

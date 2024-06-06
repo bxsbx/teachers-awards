@@ -52,7 +52,7 @@ func (u *ExportController) ExportReviewList(c *gin.Context) {
 // @Param		identity_card	query	string	false	"身份证号"
 // @Param		rank_prize		query	int		false	"0：无，1：一等奖，2：二等奖，3：三等奖"
 // @Param		rank			query	int		false	"排名"
-// @Param		final_score		query	int		false	"最终得分（各项通过的审核）"
+// @Param		final_score		query	number	false	"最终得分（各项通过的审核）"
 // @Router		/v1/export/history/activity/list [GET]
 func (u *ExportController) ExportHistoryActivityList(c *gin.Context) {
 	var params req.ExportHistoryActivityListReq
@@ -120,7 +120,7 @@ func (u *ExportController) ExportEdbReviewList(c *gin.Context) {
 // @Param		declare_type	query		int		false	"申报类型"
 // @Param		identity_card	query		string	false	"身份证号"
 // @Param		rank_prize		query		int		false	"名次，0：无，1：一等奖，2：二等奖，3：三等奖"
-// @Param		final_score		query		int		false	"最终得分（各项通过的审核）"
+// @Param		final_score		query		number	false	"最终得分（各项通过的审核）"
 // @Response	200				{object}	resp.Response
 // @Router		/v1/export/awards/set/list [GET]
 func (u *ExportController) ExportAwardsSetList(c *gin.Context) {

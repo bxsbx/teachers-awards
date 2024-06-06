@@ -58,3 +58,17 @@ type TeacherDetailInfo struct {
 	OrganName    string `json:"organ_name"`
 	Avatar       string `json:"avatar"`
 }
+
+type ZTTokenInfo struct {
+	AccessToken  string `json:"access_token"`
+	ExpiresIn    int    `json:"expires_in"`
+	RefreshToken string `json:"refresh_token"`
+	TokenType    string `json:"token_type"`
+}
+
+type VerifyToken struct {
+	ExpiresIn int    `json:"expires_in"`
+	PersonId  string `json:"person_id"`
+	ClientId  string `json:"client_id"`
+	Scope     string `json:"scope"`
+}

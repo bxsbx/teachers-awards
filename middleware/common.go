@@ -38,6 +38,7 @@ func Common() gin.HandlerFunc {
 		latency := time.Since(start) //记录耗时
 
 		fields := []zap.Field{
+			zap.String("reqId", reqId),
 			zap.String("ip", c.ClientIP()),
 			zap.String("scheme", req.Proto),
 			zap.String("remoteAddr", req.RemoteAddr),
@@ -53,6 +54,8 @@ func Common() gin.HandlerFunc {
 			fields = append(fields, zap.Any("errStack", value))
 			global.Logger.Error("Request Error", fields...)
 		} else {
+			data, _ := c.Get("data")
+			fields = append(fields, zap.Any("response", data))
 			global.Logger.Info("Request Info", fields...)
 		}
 		//释放链路

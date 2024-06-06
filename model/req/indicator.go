@@ -19,18 +19,18 @@ type DeleteOneIndicatorByIdsReq struct {
 }
 
 type CreateOrUpdateTwoIndicatorReq struct {
-	TwoIndicatorId   int    `form:"two_indicator_id"`                      //二级指标id
-	TwoIndicatorName string `form:"two_indicator_name" binding:"required"` //二级指标名称
-	Score            int    `form:"score" binding:"required"`              //分值
-	OneIndicatorId   int    `form:"one_indicator_id" binding:"required"`   //所属一级指标
+	TwoIndicatorId   int     `form:"two_indicator_id"`                      //二级指标id
+	TwoIndicatorName string  `form:"two_indicator_name" binding:"required"` //二级指标名称
+	Score            float64 `form:"score" binding:"required"`              //分值
+	OneIndicatorId   int     `form:"one_indicator_id" binding:"required"`   //所属一级指标
 }
 
 type GetTwoIndicatorListReq struct {
-	OneIndicatorId int    `form:"one_indicator_id"`             //所属一级指标
-	InputName      string `form:"input_name"`                   //输入的二级指标名称
-	InputScore     int    `form:"input_score"`                  //输入的分值
-	Page           int    `form:"page" binding:"gte=0"`         // 页数
-	Limit          int    `form:"limit" binding:"gte=0,lte=50"` // 每页大小
+	OneIndicatorId int     `form:"one_indicator_id"`             //所属一级指标
+	InputName      string  `form:"input_name"`                   //输入的二级指标名称
+	InputScore     float64 `form:"input_score"`                  //输入的分值
+	Page           int     `form:"page" binding:"gte=0"`         // 页数
+	Limit          int     `form:"limit" binding:"gte=0,lte=50"` // 每页大小
 }
 
 type DeleteTwoIndicatorByIdsReq struct {

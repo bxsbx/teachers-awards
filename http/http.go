@@ -102,7 +102,7 @@ func (c *Client) Request(path string, method string, header map[string]string, q
 	}
 	req, err := http.NewRequest(method, path, body)
 	if err != nil {
-		global.PrintSendRequestError(path, method, header, zapBody, nil, err)
+		global.PrintSendRequestError(appCtx, path, method, header, zapBody, nil, err)
 		return errorz.CodeError(errorz.NEW_REQUEST, err)
 	}
 
@@ -128,27 +128,28 @@ func (c *Client) Request(path string, method string, header map[string]string, q
 		break
 	}
 	if err != nil {
-		global.PrintSendRequestError(path, method, header, zapBody, nil, err)
+		global.PrintSendRequestError(appCtx, path, method, header, zapBody, nil, err)
 		return errorz.CodeError(errorz.REQUEST_ERR, err)
 	}
 	defer resp.Body.Close()
 
 	respBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
-		global.PrintSendRequestError(path, method, header, zapBody, string(respBytes), err)
+		global.PrintSendRequestError(appCtx, path, method, header, zapBody, string(respBytes), err)
 		return errorz.CodeError(errorz.IO_READ_ERR, err)
 	}
 
 	if resp.StatusCode != http.StatusOK {
 		err = errorz.CodeMsg(resp.StatusCode, http.StatusText(resp.StatusCode))
-		global.PrintSendRequestError(path, method, header, zapBody, string(respBytes), err)
+		global.PrintSendRequestError(appCtx, path, method, header, zapBody, string(respBytes), err)
 		return err
 	}
 	err = selectStructToResponse(respBytes, c.RespType, resultData)
 	if err != nil {
-		global.PrintSendRequestError(path, method, header, zapBody, string(respBytes), err)
+		global.PrintSendRequestError(appCtx, path, method, header, zapBody, string(respBytes), err)
 		return err
 	}
+	global.PrintSendRequestInfo(appCtx, path, method, header, zapBody, string(respBytes))
 	return nil
 }
 

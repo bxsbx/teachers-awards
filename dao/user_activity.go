@@ -31,7 +31,7 @@ type UserActivity struct {
 	SchoolId       string                `json:"school_id" gorm:"column:school_id"`                                    //学校id
 	SchoolName     string                `json:"school_name" gorm:"column:school_name"`                                //学校名称
 	DeclareType    int                   `json:"declare_type" gorm:"column:declare_type"`                              //1:幼教、2:小学、3:初中、4:高中、5:职校、6:教研
-	FinalScore     int                   `json:"final_score" gorm:"column:final_score"`                                //最终得分（各项通过的审核）
+	FinalScore     float64               `json:"final_score" gorm:"column:final_score"`                                //最终得分（各项通过的审核）
 	Rank           int                   `json:"rank" gorm:"column:rank"`                                              //排名
 	RankPrize      *int                  `json:"rank_prize" gorm:"column:rank_prize"`                                  //0：无，1：一等奖，2：二等奖，3：三等奖
 	Prize          int                   `json:"prize" gorm:"column:prize"`                                            //奖金

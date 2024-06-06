@@ -48,7 +48,7 @@ type DeclareStatus struct {
 	UserActivityIndicatorId int64      `json:"user_activity_indicator_id"` //申报id
 	TwoIndicatorId          int        `json:"two_indicator_id"`           //二级指标id
 	TwoIndicatorName        string     `json:"two_indicator_name"`         //二级指标名称
-	Score                   int        `json:"score"`                      //分值
+	Score                   float64    `json:"score"`                      //分值
 	Status                  int        `json:"status"`                     //审核状态:1.已提交 ,2.已通过,3.学校未通过,4.专家未通过,5.教育局未通过,6.活动已结束，未审批
 	DeclareTime             *time.Time `json:"declare_time"`               //申报时间
 }
@@ -61,11 +61,12 @@ type OneIndicatorDeclareStatusList struct {
 }
 
 type GetUserActivityDeclareStatusListResp struct {
-	DeclareNum int                             `json:"declare_num"` //总申报项数
-	PassNum    int                             `json:"pass_num"`    //已通过申报项数
-	NoPassNum  int                             `json:"no_pass_num"` //未通过申报项数
-	WaitReview int                             `json:"wait_review"` //待审核申报项数
-	List       []OneIndicatorDeclareStatusList `json:"list"`
+	ActivityStatus int                             `json:"activity_status"` // 活动状态，1：待开始，2：进行中，3已结束
+	DeclareNum     int                             `json:"declare_num"`     //总申报项数
+	PassNum        int                             `json:"pass_num"`        //已通过申报项数
+	NoPassNum      int                             `json:"no_pass_num"`     //未通过申报项数
+	WaitReview     int                             `json:"wait_review"`     //待审核申报项数
+	List           []OneIndicatorDeclareStatusList `json:"list"`
 }
 
 type GetUserActivityIndicatorResp struct {
@@ -77,10 +78,10 @@ type GetUserActivityIndicatorResp struct {
 }
 
 type GetUserActivityDeclareResultResp struct {
-	DeclareNum int `json:"declare_num"`  //总申报项数
-	FinalScore int `json:"final_score" ` //最终得分（各项通过的审核）
-	RankPrize  int `json:"rank_prize"`   //0：无，1：一等奖，2：二等奖，3：三等奖
-	Prize      int `json:"prize"`        //奖金
+	DeclareNum int     `json:"declare_num"`  //总申报项数
+	FinalScore float64 `json:"final_score" ` //最终得分（各项通过的审核）
+	RankPrize  int     `json:"rank_prize"`   //0：无，1：一等奖，2：二等奖，3：三等奖
+	Prize      int     `json:"prize"`        //奖金
 	List       []ActivityIndicatorInfo
 }
 type JudgesVerifyPass struct {
@@ -111,11 +112,11 @@ type GetUserHistoryDeclareResultListResp struct {
 
 type GetUserDeclareResultAppResp struct {
 	dao.UserHistoryDeclareResult
-	TeacherScore      int `json:"teacher_score"`        //老师自评
-	SchoolScore       int `json:"school_score"`         //学校评分
-	ExpertPassScore   int `json:"expert_pass_score"`    //专家评分（通过）
-	ExpertNoPassScore int `json:"expert_no_pass_score"` //专家评分（未通过）
-	EdbScore          int `json:"edb_score"`            //教育局评分
+	TeacherScore      float64 `json:"teacher_score"`        //老师自评
+	SchoolScore       float64 `json:"school_score"`         //学校评分
+	ExpertPassScore   float64 `json:"expert_pass_score"`    //专家评分（通过）
+	ExpertNoPassScore float64 `json:"expert_no_pass_score"` //专家评分（未通过）
+	EdbScore          float64 `json:"edb_score"`            //教育局评分
 }
 
 type UserDeclaresToEdb struct {
@@ -127,7 +128,7 @@ type UserDeclaresToEdb struct {
 }
 
 type GetUserDeclaresToEdbResp struct {
-	FinalScore       int                        `json:"final_score"` //最终得分（各项通过的审核）
+	FinalScore       float64                    `json:"final_score"` //最终得分（各项通过的审核）
 	List             []UserDeclaresToEdb        `json:"list"`
 	OneIndicatorList []dao.ActivityOneIndicator `json:"one_indicator_list"` //一级指标列表
 }

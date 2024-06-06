@@ -12,6 +12,7 @@ const (
 	OK       = 10000
 	OKMSG    = "成功"
 	ERRSTACK = "errStack"
+	DATA     = "data"
 )
 
 func OutputError(c *gin.Context, err error) {
@@ -22,6 +23,7 @@ func OutputError(c *gin.Context, err error) {
 }
 
 func OutputSuccess(c *gin.Context, data interface{}) {
+	c.Set(DATA, data)
 	c.JSON(http.StatusOK, resp.Response{Code: OK, Msg: OKMSG, Data: data})
 }
 
@@ -29,6 +31,7 @@ func Output(c *gin.Context, code int, msg string, data interface{}, err error) {
 	errStack := errorz.GetErrorCallerList(err)
 	response := resp.Response{Code: code, Msg: msg}
 	if data != nil {
+		c.Set(DATA, data)
 		response.Data = data
 	}
 	if errStack != nil {
@@ -41,6 +44,7 @@ func Output(c *gin.Context, code int, msg string, data interface{}, err error) {
 func ExportExcelFile(c *gin.Context, f *excelize.File, fileName string, err error) {
 	if err != nil {
 		errStack := errorz.GetErrorCallerList(err)
+		c.Set(ERRSTACK, errStack)
 		code, msg := errorz.GlobalError(err)
 		c.JSON(http.StatusInternalServerError, resp.Response{Code: code, Msg: msg, ErrStack: errStack})
 	} else {

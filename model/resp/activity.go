@@ -30,12 +30,12 @@ type GetActivityTwoIndicatorListResp struct {
 }
 
 type ActivityIndicatorInfo struct {
-	OneIndicatorId   int    `json:"one_indicator_id"`   //一级指标id
-	OneIndicatorName string `json:"one_indicator_name"` //一级指标名称
-	Content          string `json:"content"`            //评分标准说明
-	TwoIndicatorId   int    `json:"two_indicator_id"`   //二级指标id
-	TwoIndicatorName string `json:"two_indicator_name"` //二级指标名称
-	Score            int    `json:"score"`              //分值
+	OneIndicatorId   int     `json:"one_indicator_id"`   //一级指标id
+	OneIndicatorName string  `json:"one_indicator_name"` //一级指标名称
+	Content          string  `json:"content"`            //评分标准说明
+	TwoIndicatorId   int     `json:"two_indicator_id"`   //二级指标id
+	TwoIndicatorName string  `json:"two_indicator_name"` //二级指标名称
+	Score            float64 `json:"score"`              //分值
 }
 
 type GetActivityYearListResp struct {
@@ -43,5 +43,6 @@ type GetActivityYearListResp struct {
 }
 
 type GetLatestActivityResp struct {
+	HasDeclare bool `json:"has_declare"` //是否有申报过
 	dao.Activity
 }

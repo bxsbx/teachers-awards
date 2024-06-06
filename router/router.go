@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"teachers-awards/global"
 	"teachers-awards/middleware"
+	"teachers-awards/swagger"
 )
 
 func Routers() *gin.Engine {
@@ -12,7 +13,7 @@ func Routers() *gin.Engine {
 	var Router = gin.New()
 
 	//仅在dev模式下才使用，其他环境下注释掉Swagger
-	//swagger.Swagger(Router)
+	swagger.Swagger(Router)
 
 	// 跨域处理
 	Router.Use(middleware.Cors())

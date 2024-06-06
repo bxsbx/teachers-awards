@@ -364,12 +364,17 @@ func (s *ActivityService) GetActivityYearList() (data *resp.GetActivityYearListR
 	return
 }
 
-func (s *ActivityService) GetLatestActivity() (data *resp.GetLatestActivityResp, err error) {
+func (s *ActivityService) GetLatestActivity(userId string) (data *resp.GetLatestActivityResp, err error) {
 	data = &resp.GetLatestActivityResp{}
 	activityDao := dao.NewActivityDaoWithDB(global.GormDB.Order("create_time desc"), s.appCtx)
 	err = activityDao.First(nil, &data.Activity)
 	if err != nil {
 		err = errorz.CodeMsg(errorz.RESP_ERR, "活动尚未开始")
+	}
+	userActivityDao := dao.NewUserActivityDao(s.appCtx)
+	count, err := userActivityDao.Count(dao.UserActivity{UserId: userId, ActivityId: data.ActivityId})
+	if count > 0 {
+		data.HasDeclare = true
 	}
 	return
 }

@@ -21,7 +21,7 @@ type JudgesVerify struct {
 	JudgesName              string                `json:"judges_name" gorm:"column:judges_name"`                                   //评委姓名
 	JudgesType              int                   `json:"judges_type" gorm:"column:judges_type"`                                   //评委类型，1：学校，2：专家，3：教育局
 	IsPass                  int                   `json:"is_pass" gorm:"column:is_pass"`                                           //0：未通过，1：通过
-	Score                   int                   `json:"score" gorm:"column:score"`                                               //得分
+	Score                   float64               `json:"score" gorm:"column:score"`                                               //得分
 	Opinion                 string                `json:"opinion" gorm:"column:opinion"`                                           //审核意见
 	CreateTime              *time.Time            `json:"create_time" gorm:"column:create_time"`                                   //创建时间
 	DeleteTime              *time.Time            `json:"-" gorm:"column:delete_time"`                                             //删除时间

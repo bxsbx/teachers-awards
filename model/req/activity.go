@@ -1,6 +1,8 @@
 package req
 
-import "time"
+import (
+	"time"
+)
 
 type CreateOrUpdateActivityReq struct {
 	ActivityId      int        `json:"activity_id"`                           //活动id
@@ -45,4 +47,8 @@ type GetActivityTwoIndicatorListReq struct {
 
 type EndActivityReq struct {
 	ActivityId int `form:"activity_id"  binding:"required"` //活动id
+}
+
+type GetLatestActivityReq struct {
+	UserId string `form:"user_id"  binding:"required"` //用户id
 }

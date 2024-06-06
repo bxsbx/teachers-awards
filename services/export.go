@@ -118,7 +118,7 @@ func (s *ExportService) ExportUserDeclareRecordListByYear(params *req.ExportUser
 			process := 0
 			for j := 0; j < len(row.JudgesVerifyList); j++ {
 				isPass := row.JudgesVerifyList[j].IsPass
-				score := 0
+				var score float64
 				if isPass == global.PassYes {
 					score = row.Score
 				}

@@ -29,7 +29,7 @@ func GlobalError(err error) (code int, msg string) {
 		if oneErr != nil {
 			code, msg = oneErr.code, oneErr.msg
 		} else {
-			code, msg = RESP_ERR, GetMsgWithCode(RESP_ERR)
+			code, msg = RESP_UNKNOWN_ERR, err.Error()
 		}
 	}
 	return

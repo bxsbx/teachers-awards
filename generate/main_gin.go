@@ -38,16 +38,16 @@ var ParamTypeMap = map[string]string{
 func main() {
 	myTemplate := myTemplate{
 		ProjectName: ProjectName,
-		GroupName:   "User",
-		FunName:     "CancelExpertAuth",
-		ReqModel:    "CancelExpertAuthReq",
-		RespModel:   "",
+		GroupName:   "Public",
+		FunName:     "GetTokenAndUserInfoByCode",
+		ReqModel:    "GetTokenAndUserInfoByCodeReq",
+		RespModel:   "GetTokenAndUserInfoResp",
 		DataType:    "",
-		Router:      "/v1/user/cancel/expert/auth",
-		Method:      http.MethodPost,
+		Router:      "/v1/public/get/user/info/by/code",
+		Method:      http.MethodGet,
 	}
 	swagger := Swagger{
-		Summary: "取消专家授权",
+		Summary: "通过code获取用户信息和token",
 		Tags:    myTemplate.GroupName,
 		Produce: Produce,
 	}
@@ -168,6 +168,8 @@ func GetParamsFromReqType(myTemplate myTemplate) []Params {
 			params.DataType = strs[1]
 			if strings.Contains(params.DataType, "time.Time") {
 				params.DataType = "string"
+			} else if strings.Contains(params.DataType, "float") {
+				params.DataType = "number"
 			}
 			if strings.Contains(line, "required") {
 				params.IsNeed = true

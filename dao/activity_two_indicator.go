@@ -16,7 +16,7 @@ type ActivityTwoIndicator struct {
 	ActivityId       int        `json:"activity_id" gorm:"column:activity_id;primary_key"`           //活动id
 	TwoIndicatorId   int        `json:"two_indicator_id" gorm:"column:two_indicator_id;primary_key"` //二级指标id
 	TwoIndicatorName string     `json:"two_indicator_name" gorm:"column:two_indicator_name"`         //二级指标名称
-	Score            int        `json:"score" gorm:"column:score"`                                   //分值
+	Score            float64    `json:"score" gorm:"column:score"`                                   //分值
 	OneIndicatorId   int        `json:"one_indicator_id" gorm:"column:one_indicator_id"`             //所属一级指标
 	CreateTime       *time.Time `json:"create_time" gorm:"column:create_time"`                       //创建时间
 }

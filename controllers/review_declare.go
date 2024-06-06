@@ -105,7 +105,7 @@ func (u *ReviewDeclareController) CommitReview(c *gin.Context) {
 // @Param		identity_card	query		string	false	"身份证号"
 // @Param		rank_prize		query		int		false	"0：无，1：一等奖，2：二等奖，3：三等奖"
 // @Param		rank			query		int		false	"排名"
-// @Param		final_score		query		int		false	"最终得分（各项通过的审核）"
+// @Param		final_score		query		number	false	"最终得分（各项通过的审核）"
 // @Param		page			query		int		true	"页数"
 // @Param		limit			query		int		true	"每页大小"
 // @Response	200				{object}	resp.Response{data=resp.GetHistoryActivityListResp}
@@ -137,7 +137,7 @@ func (u *ReviewDeclareController) GetHistoryActivityList(c *gin.Context) {
 // @Param		declare_type	query		int		false	"申报类型"
 // @Param		identity_card	query		string	false	"身份证号"
 // @Param		rank_prize		query		int		false	"名次，0：无，1：一等奖，2：二等奖，3：三等奖"
-// @Param		final_score		query		int		false	"最终得分（各项通过的审核）"
+// @Param		final_score		query		number	false	"最终得分（各项通过的审核）"
 // @Param		page			query		int		true	"页数"
 // @Param		limit			query		int		true	"每页大小"
 // @Response	200				{object}	resp.Response{data=resp.GetAwardsSetListResp}

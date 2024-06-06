@@ -91,7 +91,7 @@ func (u *IndicatorController) DeleteOneIndicatorByIds(c *gin.Context) {
 // @Produce	json
 // @Param		two_indicator_id	formData	int		false	"二级指标id"
 // @Param		two_indicator_name	formData	string	true	"二级指标名称"
-// @Param		score				formData	int		true	"分值"
+// @Param		score				formData	number	true	"分值"
 // @Param		one_indicator_id	formData	int		true	"所属一级指标"
 // @Response	200					{object}	resp.Response{data=resp.CreateOrUpdateTwoIndicatorResp}
 // @Router		/v1/indicator/two/save [POST]
@@ -141,7 +141,7 @@ func (u *IndicatorController) DeleteTwoIndicatorByIds(c *gin.Context) {
 // @Produce	json
 // @Param		one_indicator_id	query		int		false	"所属一级指标"
 // @Param		input_name			query		string	false	"输入的二级指标名称"
-// @Param		input_score			query		int		false	"输入的分值"
+// @Param		input_score			query		number	false	"输入的分值"
 // @Param		page				query		int		false	"页数"
 // @Param		limit				query		int		false	"每页大小"
 // @Response	200					{object}	resp.Response{data=resp.GetTwoIndicatorListResp}

@@ -31,6 +31,47 @@ func NewMiddlePlatformClientWithFrom(appCtx context.Context, from string) *Middl
 	return &MiddlePlatformClient{From: from, AppCtx: appCtx, Client: http2.GetClient(http2.MiddlePlatform)}
 }
 
+func (l *MiddlePlatformClient) GetTokenByCode(code, redirectUrl string) (tokenInfo client.ZTTokenInfo, err error) {
+	//cfg := global.AccountCenterMap[l.From]
+	cfg, err := global.GetZtConfig(l.From)
+	if err != nil {
+		return
+	}
+	path := "/v1/oauth2/token"
+	method := http.MethodPost
+
+	headerMap := make(map[string]string)
+	headerMap[http2.CONTENT_TYPE] = http2.BODY_FORM
+	//headerMap[Authorization] = global.GetToken(cfg.LoginClientId, cfg.LoginClientSecret, path, method, headerMap, global.VALID_TIME)
+
+	form := url.Values{}
+	form.Add("grant_type", "authorization_code")
+	form.Add("code", code)
+	form.Add("client_id", cfg.LoginClientId)
+	form.Add("client_secret", cfg.LoginClientSecret)
+	form.Add("redirect_uri", redirectUrl)
+
+	err = l.Client.Request(cfg.LoginDomain+path, method, headerMap, nil, strings.NewReader(form.Encode()), &tokenInfo, l.AppCtx)
+	return
+}
+
+func (l *MiddlePlatformClient) VerifyToken(token string) (tokenInfo client.VerifyToken, err error) {
+	//cfg := global.AccountCenterMap[l.From]
+	cfg, err := global.GetZtConfig(l.From)
+	if err != nil {
+		return
+	}
+	path := "/v1/oauth2/token/verify"
+	method := http.MethodPost
+
+	headerMap := make(map[string]string)
+	headerMap[http2.CONTENT_TYPE] = http2.BODY_FORM
+	headerMap["Authorization"] = "Bearer " + token
+
+	err = l.Client.Request(cfg.LoginDomain+path, method, headerMap, nil, nil, &tokenInfo, l.AppCtx)
+	return
+}
+
 func (l *MiddlePlatformClient) GetUserInfoByZtToken(ztToken string) (userInfo client.UserInfo, err error) {
 	//cfg := global.AccountCenterMap[l.From]
 	cfg, err := global.GetZtConfig(l.From)
